@@ -53,4 +53,4 @@ from items import *
 from events import *
 # from guild import *
 # from wvw import *
-from util import encode_chat_link
+from util import *

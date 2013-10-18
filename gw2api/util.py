@@ -9,6 +9,9 @@ from base64 import b64encode
 import gw2api
 
 
+__all__ = ("encode_item_link", "encode_coin_link", "encode_chat_link")
+
+
 def mtime(path):
     """Get the modification time of a file, or -1 if the file does not exist.
     """
