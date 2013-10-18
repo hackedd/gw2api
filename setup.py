@@ -1,5 +1,10 @@
 #!/usr/bin/env python
+import os
 from distutils.core import setup
+
+def read(fname):
+    with open(os.path.join(os.path.dirname(__file__), fname)) as fp:
+        return fp.read()
 
 setup(name="gw2api",
       version="1.0.1",
@@ -7,6 +12,8 @@ setup(name="gw2api",
       author="Paul Hooijenga",
       author_email="paulhooijenga@gmail.com",
       url="https://github.com/hackedd/gw2api",
+      license="MIT",
+      long_description=read("README.rst"),
       packages=["gw2api"],
       requires=["requests"],
       classifiers=["Development Status :: 3 - Alpha",
