@@ -1,0 +1,2 @@
+include README.rst LICENSE
+include docs/Makefile docs/conf.py docs/*.rst
