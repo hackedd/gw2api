@@ -50,6 +50,7 @@ def set_cache_time(time):
 from map import *
 from misc import *
 from items import *
+from skins import *
 from events import *
 # from guild import *
 # from wvw import *
