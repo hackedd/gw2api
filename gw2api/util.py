@@ -77,7 +77,8 @@ def encode_chat_link(link_type, **kwargs):
     elif link_type == gw2api.TYPE_ITEM:
         data = pack("<BBI", link_type, kwargs.get("number", 1), kwargs["id"])
     elif link_type in (gw2api.TYPE_TEXT, gw2api.TYPE_MAP, gw2api.TYPE_SKILL,
-                       gw2api.TYPE_TRAIT, gw2api.TYPE_RECIPE):
+                       gw2api.TYPE_TRAIT, gw2api.TYPE_RECIPE,
+                       gw2api.TYPE_SKIN, gw2api.TYPE_OUTFIT):
         data = pack("<BI", link_type, kwargs["id"])
     else:
         raise Exception("Unknown link type 0x%02x" % link_type)

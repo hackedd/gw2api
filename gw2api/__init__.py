@@ -7,6 +7,7 @@ BASE_URL = "https://api.guildwars2.com/%s/" % VERSION
 LANGUAGES = {"en": "English", "es": "Spanish", "de": "German", "fr": "French"}
 TYPE_COIN, TYPE_ITEM, TYPE_TEXT, TYPE_MAP = 1, 2, 3, 4
 TYPE_SKILL, TYPE_TRAIT, TYPE_PLAYER, TYPE_RECIPE = 7, 8, 9, 10
+TYPE_SKIN, TYPE_OUTFIT = 11, 12
 LINK_TYPES = {
     "coin": TYPE_COIN,
     "item": TYPE_ITEM,
@@ -16,6 +17,8 @@ LINK_TYPES = {
     "trait": TYPE_TRAIT,
     "player": TYPE_PLAYER,
     "recipe": TYPE_RECIPE,
+    "skin": TYPE_SKIN,
+    "outfit": TYPE_OUTFIT,
 }
 
 session = requests.Session()
