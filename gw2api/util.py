@@ -46,13 +46,18 @@ def get_cached(path, cache_name=None, **kwargs):
     return data
 
 
-def encode_item_link(item_id, number=1):
+def encode_item_link(item_id, number=1, skin_id=None, upgrade1=None, upgrade2=None):
     """Encode a chat link for an item (or a stack of items).
 
     :param item_id: the Id of the item
     :param number: the number of items in the stack
+    :param skin_id: the id of the skin applied to the item
+    :param upgrade1: the id of the first upgrade component
+    :param upgrade2: the id of the second upgrade component
     """
-    return encode_chat_link(gw2api.TYPE_ITEM, id=item_id, number=number)
+    return encode_chat_link(gw2api.TYPE_ITEM, id=item_id, number=number,
+                            skin_id=skin_id, upgrade1=upgrade1,
+                            upgrade2=upgrade2)
 
 
 def encode_coin_link(copper, silver=0, gold=0):
@@ -74,12 +79,25 @@ def encode_chat_link(link_type, **kwargs):
         else:
             amount = kwargs["amount"]
         data = pack("<BI", link_type, amount)
+
     elif link_type == gw2api.TYPE_ITEM:
-        data = pack("<BBI", link_type, kwargs.get("number", 1), kwargs["id"])
+        item_id = kwargs["id"]
+
+        args = []
+        for i, key in enumerate(("skin_id", "upgrade1", "upgrade2")):
+            value = kwargs.get(key)
+            if value:
+                item_id |= 2 << (28 + i)
+                args.append(value)
+
+        format = "<BBI" + "I" * len(args)
+        data = pack(format, link_type, kwargs.get("number", 1), item_id, *args)
+
     elif link_type in (gw2api.TYPE_TEXT, gw2api.TYPE_MAP, gw2api.TYPE_SKILL,
                        gw2api.TYPE_TRAIT, gw2api.TYPE_RECIPE,
                        gw2api.TYPE_SKIN, gw2api.TYPE_OUTFIT):
         data = pack("<BI", link_type, kwargs["id"])
+
     else:
         raise Exception("Unknown link type 0x%02x" % link_type)
 
