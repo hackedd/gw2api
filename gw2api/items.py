@@ -74,7 +74,7 @@ def item_details(item_id, lang="en"):
         Race restrictions: ``Asura``, ``Charr``, ``Human``, ``Norn`` and
         ``Sylvari``.
 
-    Each item type has an `additional key`_ with information specifici to that
+    Each item type has an `additional key`_ with information specific to that
     item type.
 
     .. _additional key: item-properties.html
@@ -111,14 +111,17 @@ def recipe_details(recipe_id, lang="en"):
     time_to_craft_ms (string):
         The time it takes to craft the item.
 
-    vendor_value (string):
-        The value in coins when selling to a vendor.
-
     disciplines (list):
         A list of crafting disciplines that can use the recipe.
 
     flags (list):
-        Additional recipe flags.
+        Additional recipe flags. Known flags:
+
+        ``AutoLearned``:
+            Set for recipes that don't have to be discovered.
+
+        ``LearnedFromItem``:
+            Set for recipes that need a recipe sheet.
 
     ingredients (list):
         A list of objects describing the ingredients for this recipe. Each
