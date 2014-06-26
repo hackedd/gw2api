@@ -80,8 +80,8 @@ def item_details(item_id, lang="en"):
     .. _additional key: item-properties.html
 
     """
-    cache_name = "item_details.%s.%s.json" % (item_id, lang)
     params = {"item_id": item_id, "lang": lang}
+    cache_name = "item_details.%(item_id)s.%(lang)s.json" % params
     return get_cached("item_details.json", cache_name, params=params)
 
 
@@ -134,6 +134,6 @@ def recipe_details(recipe_id, lang="en"):
             The amount of ingredients required.
 
     """
-    cache_name = "recipe_details.%s.%s.json" % (recipe_id, lang)
     params = {"recipe_id": recipe_id, "lang": lang}
+    cache_name = "recipe_details.%(recipe_id)s.%(lang)s.json" % params
     return get_cached("recipe_details.json", cache_name, params=params)

@@ -3,13 +3,13 @@ import sys
 import time
 import json
 import requests
-from struct import pack
-from base64 import b64encode
+from struct import pack, unpack
+from base64 import b64encode, b64decode
 
 import gw2api
 
 
-__all__ = ("encode_item_link", "encode_coin_link", "encode_chat_link")
+__all__ = ("encode_item_link", "encode_coin_link", "encode_chat_link", "decode_chat_link")
 
 
 def mtime(path):
@@ -102,3 +102,43 @@ def encode_chat_link(link_type, **kwargs):
         raise Exception("Unknown link type 0x%02x" % link_type)
 
     return "[&%s]" % b64encode(data)
+
+
+def decode_chat_link(string):
+    if string.startswith("[&") and string.endswith("]"):
+        string = string[2:-1]
+    data = b64decode(string)
+
+    link_type, = unpack("<B", data[0])
+
+    link_type_string = None
+    for key, value in gw2api.LINK_TYPES.iteritems():
+        if value == link_type:
+            link_type_string = key
+
+    if link_type == gw2api.TYPE_COIN:
+        amount, = unpack("<I", data[1:])
+        return "coin", {"amount": amount}
+
+    if link_type == gw2api.TYPE_ITEM:
+        number, item_id = unpack("<BI", data[1:6])
+        flags = (item_id & 0xFF000000) >> 24
+        item_id &= 0x00FFFFFF
+        values = {"number": number, "id": item_id, "flags": flags}
+        o = 6
+        if flags & 0x80:
+            values["skin_id"], = unpack("<I", data[o:o+4])
+            o += 4
+        if flags & 0x40:
+            values["upgrade1"], = unpack("<I", data[o:o+4])
+            o += 4
+        if flags & 0x20:
+            values["upgrade2"], = unpack("<I", data[o:o+4])
+            o += 4
+        return "item", values
+
+    if link_type in (gw2api.TYPE_TEXT, gw2api.TYPE_MAP, gw2api.TYPE_SKILL,
+                     gw2api.TYPE_TRAIT, gw2api.TYPE_RECIPE,
+                     gw2api.TYPE_SKIN, gw2api.TYPE_OUTFIT):
+        id, = unpack("<I", data[1:])
+        return link_type_string, { "id": id }
