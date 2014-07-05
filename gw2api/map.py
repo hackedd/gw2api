@@ -1,21 +1,7 @@
 from .util import get_cached
 
 
-__all__ = ("world_names", "continents", "map_names", "maps", "map_floor")
-
-
-def world_names(lang="en"):
-    """This resource returns a dictionary of the localized world names for the
-    specified language.
-
-    :param lang: The language to query the names for.
-    :return: the response is a dictionary where the key is the world id and
-             the value is the name of the world in the specified language.
-
-    """
-    cache_name = "world_names.%s.json" % lang
-    data = get_cached("world_names.json", cache_name, params=dict(lang=lang))
-    return dict([(item["id"], item["name"]) for item in data])
+__all__ = ("continents", "map_names", "maps", "map_floor")
 
 
 def continents():

@@ -1,65 +1,7 @@
 from .util import get_cached
 
 
-__all__ = ("events", "event_names", "event_details")
-
-
-def events(world_id=None, map_id=None, event_id=None):
-    """This resource returns a list of events and their status that match the
-    given filter. *The results are not cached.*
-
-    :param world_id: Only list events for that world.
-    :param map_id: Only list events in that map.
-    :param event_id: Only list this event.
-
-    The response is a list of events, each of which contains the following:
-
-    world_id (number)
-        The world on which the event is running.
-
-    map_id (number)
-        The map on which the event is running.
-
-    event_id (string)
-        The event GUID identifying the event.
-
-    state (string)
-        The current state of the event.
-
-        The state can be one of the following values:
-
-        ``Inactive``
-            The event is not running.
-
-        ``Active``
-            The event is running now.
-
-        ``Success``
-            The event has succeeded.
-
-        ``Fail``
-            The event has failed.
-
-        ``Warmup``
-            The event is inactive and waiting for certain criteria to be met
-            before becoming `Active`.
-
-        ``Preparation``
-            The criteria for the event to start have been met, but certain
-            activities (such as an NPC dialogue) have not completed yet. After
-            the activities have been completed, the event will become `Active`.
-
-    """
-    params = {}
-    if world_id:
-        params["world_id"] = world_id
-    if map_id:
-        params["map_id"] = map_id
-    if event_id:
-        params["event_id"] = event_id
-
-    data = get_cached("events.json", False, params=params)
-    return data["events"]
+__all__ = ("event_names", "event_details")
 
 
 def event_names(lang="en"):
