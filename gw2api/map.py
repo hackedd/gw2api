@@ -91,6 +91,8 @@ def maps(map_id=None, lang="en"):
     continent_rect (rect)
         The dimensions of the map within the continent coordinate system.
 
+    If a map_id is given, only the values for that map are returned.
+
     """
     if map_id:
         cache_name = "maps.%s.%s.json" % (map_id, lang)
@@ -98,7 +100,9 @@ def maps(map_id=None, lang="en"):
     else:
         cache_name = "maps.%s.json" % lang
         params = {"lang": lang}
-    return get_cached("maps.json", cache_name, params=params)
+
+    data = get_cached("maps.json", cache_name, params=params).get("maps")
+    return data.get(str(map_id)) if map_id else data
 
 
 def map_floor(continent_id, floor, lang="en"):

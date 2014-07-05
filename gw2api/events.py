@@ -64,6 +64,8 @@ def event_details(event_id=None, lang="en"):
         points (list) (type ``poly``)
             List of Points (X, Y) denoting the event location perimeter.
 
+    If a event_id is given, only the values for that event are returned.
+
     """
     if event_id:
         cache_name = "event_details.%s.%s.json" % (event_id, lang)
@@ -73,4 +75,5 @@ def event_details(event_id=None, lang="en"):
         params = {"lang": lang}
 
     data = get_cached("event_details.json", cache_name, params=params)
-    return data["events"]
+    events = data["events"]
+    return events.get(event_id) if event_id else events
