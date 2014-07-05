@@ -1,15 +1,14 @@
 import os
-import sys
 import time
 import json
-import requests
 from struct import pack, unpack
 from base64 import b64encode, b64decode
 
 import gw2api
 
 
-__all__ = ("encode_item_link", "encode_coin_link", "encode_chat_link", "decode_chat_link")
+__all__ = ("encode_item_link", "encode_coin_link",
+           "encode_chat_link", "decode_chat_link")
 
 
 def mtime(path):
@@ -46,7 +45,8 @@ def get_cached(path, cache_name=None, **kwargs):
     return data
 
 
-def encode_item_link(item_id, number=1, skin_id=None, upgrade1=None, upgrade2=None):
+def encode_item_link(item_id, number=1, skin_id=None,
+                     upgrade1=None, upgrade2=None):
     """Encode a chat link for an item (or a stack of items).
 
     :param item_id: the Id of the item
@@ -111,11 +111,6 @@ def decode_chat_link(string):
 
     link_type, = unpack("<B", data[0])
 
-    link_type_string = None
-    for key, value in gw2api.LINK_TYPES.iteritems():
-        if value == link_type:
-            link_type_string = key
-
     if link_type == gw2api.TYPE_COIN:
         amount, = unpack("<I", data[1:])
         return "coin", {"amount": amount}
@@ -137,8 +132,13 @@ def decode_chat_link(string):
             o += 4
         return "item", values
 
+    link_type_string = None
+    for key, value in gw2api.LINK_TYPES.iteritems():
+        if value == link_type:
+            link_type_string = key
+
     if link_type in (gw2api.TYPE_TEXT, gw2api.TYPE_MAP, gw2api.TYPE_SKILL,
                      gw2api.TYPE_TRAIT, gw2api.TYPE_RECIPE,
                      gw2api.TYPE_SKIN, gw2api.TYPE_OUTFIT):
         id, = unpack("<I", data[1:])
-        return link_type_string, { "id": id }
+        return link_type_string, {"id": id}

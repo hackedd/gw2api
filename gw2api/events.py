@@ -47,7 +47,7 @@ def events(world_id=None, map_id=None, event_id=None):
         ``Preparation``
             The criteria for the event to start have been met, but certain
             activities (such as an NPC dialogue) have not completed yet. After
-            the activites have been completed, the event will become `Active`.
+            the activities have been completed, the event will become `Active`.
 
     """
     params = {}

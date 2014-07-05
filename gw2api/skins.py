@@ -3,6 +3,7 @@ from .util import get_cached
 
 __all__ = ("skins", "skin_details")
 
+
 def skins():
     """This resource returns a list of skins that were discovered by players
     in the game. Details about a single skin can be obtained using the
@@ -11,13 +12,14 @@ def skins():
     """
     return get_cached("skins.json").get("skins")
 
+
 def skin_details(skin_id, lang="en"):
     """This resource returns details about a single skin.
 
     :param skin_id: The skin to query for.
     :param lang: The language to display the texts in.
 
-    The response is an object with at least the followin properties. Note that
+    The response is an object with at least the following properties. Note that
     the availability of some properties depends on the type of item the skin
     applies to.
 
