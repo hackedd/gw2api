@@ -37,6 +37,11 @@ def set_cache_dir(directory):
     """Set the directory to cache JSON responses from most API endpoints.
     """
     global cache_dir
+
+    if directory is None:
+        cache_dir = None
+        return
+
     if not os.path.exists(directory):
         os.makedirs(directory)
     if not os.path.isdir(directory):
