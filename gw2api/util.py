@@ -35,6 +35,15 @@ def get_cached(path, cache_name=None, **kwargs):
         cache_file = None
 
     r = gw2api.session.get(gw2api.BASE_URL + path, **kwargs)
+
+    if r.status_code == 500:
+        try:
+            response = r.json()
+        except ValueError:  # pragma: no cover
+            response = None
+        if isinstance(response, dict) and "text" in response:
+            r.reason = response["text"]
+
     r.raise_for_status()
     data = r.json()
 
