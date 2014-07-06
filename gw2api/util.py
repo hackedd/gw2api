@@ -63,12 +63,14 @@ def encode_item_link(item_id, number=1, skin_id=None,
 def encode_coin_link(copper, silver=0, gold=0):
     """Encode a chat link for an amount of coins.
     """
-    amount = copper + silver * 100 + gold * 100 * 100
-    return encode_chat_link(gw2api.TYPE_COIN, amount=amount)
+    return encode_chat_link(gw2api.TYPE_COIN, copper=copper, silver=silver,
+                            gold=gold)
 
 
 def encode_chat_link(link_type, **kwargs):
     if isinstance(link_type, basestring):
+        if link_type not in gw2api.LINK_TYPES:
+            raise Exception("Unknown link type '%s'" % link_type)
         link_type = gw2api.LINK_TYPES[link_type]
 
     if link_type == gw2api.TYPE_COIN:
@@ -119,7 +121,7 @@ def decode_chat_link(string):
         number, item_id = unpack("<BI", data[1:6])
         flags = (item_id & 0xFF000000) >> 24
         item_id &= 0x00FFFFFF
-        values = {"number": number, "id": item_id, "flags": flags}
+        values = {"number": number, "id": item_id}
         o = 6
         if flags & 0x80:
             values["skin_id"], = unpack("<I", data[o:o+4])

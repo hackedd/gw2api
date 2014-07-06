@@ -1,9 +1,11 @@
-gw2api.util module
-===========================
+Other Utilities
+===============
 
-.. automodule:: gw2api.util
-    :members:
-    :undoc-members:
-    :show-inheritance:
+.. autofunction:: gw2api.encode_item_link
 
+.. autofunction:: gw2api.encode_coin_link
+
+.. autofunction:: gw2api.encode_chat_link
+
+.. autofunction:: gw2api.decode_chat_link
 

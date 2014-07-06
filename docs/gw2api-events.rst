@@ -1,9 +1,7 @@
-gw2api.events module
-===========================
+Dynamic events
+==============
 
-.. automodule:: gw2api.events
-    :members:
-    :undoc-members:
-    :show-inheritance:
+.. autofunction:: gw2api.event_names
 
+.. autofunction:: gw2api.event_details
 

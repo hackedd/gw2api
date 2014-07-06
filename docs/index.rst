@@ -11,9 +11,13 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-   gw2api-events.rst
-   gw2api-items.rst
+   gw2api.rst
    gw2api-map.rst
+   gw2api-items.rst
+   gw2api-skins.rst
+   gw2api-events.rst
+   gw2api-guild.rst
+   gw2api-wvw.rst
    gw2api-misc.rst
    gw2api-util.rst
    item-properties.rst
