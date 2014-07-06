@@ -61,5 +61,5 @@ from items import *
 from skins import *
 from events import *
 from guild import *
-# from wvw import *
+from wvw import *
 from util import *
