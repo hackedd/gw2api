@@ -55,11 +55,17 @@ def set_cache_time(time):
     global cache_time
     cache_time = time
 
-from map import *
-from misc import *
-from items import *
-from skins import *
-from events import *
-from guild import *
-from wvw import *
-from util import *
+
+def get_mumble_link():
+    from .mumble import gw2link
+    return gw2link
+
+
+from .map import *
+from .misc import *
+from .items import *
+from .skins import *
+from .events import *
+from .guild import *
+from .wvw import *
+from .util import *
