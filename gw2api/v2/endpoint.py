@@ -97,9 +97,7 @@ class LocaleAwareEndpoint(Endpoint):
         return self.get_cached(self.name, cache_name, params=params)
 
     def get(self, *args, **kwargs):
-        lang = kwargs.pop("lang")
-        if lang is None:
-            lang = self.default_language
+        lang = kwargs.get("lang") or self.default_language
 
         if len(args) == 1 and isinstance(args[0], (list, tuple)):
             args = args[0]
