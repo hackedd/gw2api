@@ -62,11 +62,11 @@ class Endpoint(object):
         return self.get_cached(self.name, cache_name, params={"ids": "all"})
 
     def get(self, *args):
-        if len(args) == 1 and isinstance(args[0], (list, tuple)):
-            args = args[0]
-
         if len(args) == 1:
-            return self.get_one(args[0])
+            if isinstance(args[0], (list, tuple)):
+                args = args[0]
+            else:
+                return self.get_one(args[0])
 
         params = {"ids": ",".join(map(str, args))}
         cache_name = self.name + ".%(ids)s.json" % params
@@ -99,11 +99,11 @@ class LocaleAwareEndpoint(Endpoint):
     def get(self, *args, **kwargs):
         lang = kwargs.get("lang") or self.default_language
 
-        if len(args) == 1 and isinstance(args[0], (list, tuple)):
-            args = args[0]
-
         if len(args) == 1:
-            return self.get_one(args[0], lang)
+            if isinstance(args[0], (list, tuple)):
+                args = args[0]
+            else:
+                return self.get_one(args[0], lang)
 
         params = {"ids": ",".join(map(str, args)), "lang": lang}
         cache_name = self.name + ".%(lang)s.%(ids)s.json" % params
