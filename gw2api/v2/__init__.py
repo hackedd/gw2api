@@ -11,6 +11,7 @@ LANGUAGES = {
 
 
 from .endpoint import Endpoint, LocaleAwareEndpoint
+from .recipes import RecipeSearchEndpoint
 
 
 accounts = Endpoint("accounts")
@@ -30,6 +31,7 @@ leaderboards = Endpoint("leaderboards")
 maps = LocaleAwareEndpoint("maps")
 quaggans = Endpoint("quaggans")
 recipes = Endpoint("recipes")
+recipe_search = RecipeSearchEndpoint(recipes)
 skins = LocaleAwareEndpoint("skins")
 worlds = LocaleAwareEndpoint("worlds")
 wvw_matches = Endpoint("wvw/matches")
