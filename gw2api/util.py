@@ -36,7 +36,7 @@ def get_cached(path, cache_name=None, **kwargs):
 
     r = gw2api.session.get(gw2api.BASE_URL + path, **kwargs)
 
-    if r.status_code == 500:
+    if not r.ok:
         try:
             response = r.json()
         except ValueError:  # pragma: no cover
