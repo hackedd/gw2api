@@ -65,5 +65,4 @@ def guild_details(guild_id=None, name=None):
     else:
         raise Exception("specify either guild_id or name")
 
-    print cache_name, params
     return get_cached("guild_details.json", cache_name, params=params)
