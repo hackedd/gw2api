@@ -4,6 +4,7 @@ import tempfile
 
 import gw2api
 import gw2api.util
+import gw2api.v2.util
 
 from mock_requests import MockSession
 import requests
@@ -254,3 +255,20 @@ class TestUtil(unittest.TestCase):
         with self.assertRaises(requests.HTTPError) as context:
             gw2api.util.get_cached("map_floor.json")
         self.assertIn("missing continent_id or floor", str(context.exception))
+
+    def test_list_wrapper(self):
+        pages = [[1, 2], [3, 4], [5, 6]]
+
+        class Endpoint(object):
+            def page(self, page, *args):
+                data = pages[page]
+                return gw2api.v2.util.ListWrapper(self, page, data, args)
+
+        endpoint = Endpoint()
+        p0 = endpoint.page(0)
+        self.assertEqual(p0, [1, 2])
+
+        p1 = p0.next_page()
+        self.assertEqual(p1, [3, 4])
+
+        self.assertEqual(p0, p1.previous_page())
