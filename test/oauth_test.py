@@ -20,9 +20,10 @@ class TestAuthenticated(unittest.TestCase):
             self.token_data = None
 
     def test_account_no_auth(self):
+        gw2api.v2.account.set_token(None)
         with self.assertRaises(Exception) as context:
             gw2api.v2.account.get()
-        self.assertIn("endpoint requires authentication", str(context))
+        self.assertIn("endpoint requires authentication", str(context.exception))
 
     def test_account(self):
         if not self.token_data:
