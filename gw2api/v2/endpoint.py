@@ -12,22 +12,18 @@ class Endpoint(object):
         super(Endpoint, self).__init__()
         self.name = name
 
-    def has_cached(self, path, cache_name):
-        if gw2api.cache_dir and gw2api.cache_time and cache_name is not False:
-            if cache_name is None:
-                cache_name = path
+    def has_cached(self, cache_name):
+        if gw2api.cache_dir and gw2api.cache_time and cache_name:
             cache_file = os.path.join(gw2api.cache_dir, cache_name)
             return mtime(cache_file) >= time.time() - gw2api.cache_time
         else:
             return False
 
-    def get_cached(self, path, cache_name=None, **kwargs):
+    def get_cached(self, path, cache_name, **kwargs):
         """Request a resource form the API, first checking if there is a cached
         response available. Returns the parsed JSON data.
         """
-        if gw2api.cache_dir and gw2api.cache_time and cache_name is not False:
-            if cache_name is None:
-                cache_name = path
+        if gw2api.cache_dir and gw2api.cache_time and cache_name:
             cache_file = os.path.join(gw2api.cache_dir, cache_name)
             if mtime(cache_file) >= time.time() - gw2api.cache_time:
                 with open(cache_file, "r") as fp:
@@ -37,7 +33,7 @@ class Endpoint(object):
 
         r = gw2api.session.get(gw2api.v2.BASE_URL + path, **kwargs)
 
-        if r.status_code == 500:
+        if not r.ok:
             try:
                 response = r.json()
             except ValueError:  # pragma: no cover
