@@ -31,6 +31,15 @@ class Endpoint(object):
         else:
             cache_file = None
 
+        data = self._get(path, **kwargs)
+
+        if cache_file:
+            with open(cache_file, "w") as fp:
+                json.dump(data, fp, indent=2)
+
+        return data
+
+    def _get(self, path, **kwargs):
         r = gw2api.session.get(gw2api.v2.BASE_URL + path, **kwargs)
 
         if not r.ok:
@@ -42,13 +51,7 @@ class Endpoint(object):
                 r.reason = response["text"]
 
         r.raise_for_status()
-        data = r.json()
-
-        if cache_file:
-            with open(cache_file, "w") as fp:
-                json.dump(data, fp, indent=2)
-
-        return data
+        return r.json()
 
     def get_ids(self):
         return self.get_cached(self.name, self.name + ".json")
