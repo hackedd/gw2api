@@ -1,4 +1,5 @@
 import urllib
+import warnings
 
 from .endpoint import Endpoint
 
@@ -11,6 +12,10 @@ class AuthenticationHelper(object):
 
     def __init__(self, client_id, client_secret, redirect_uri):
         super(AuthenticationHelper, self).__init__()
+        warnings.warn("OAuth2 has been deprecated and will be disabled on "
+                      "Thursday, June 4th (http://tinyurl.com/gw2oauth).",
+                      stacklevel=2)
+
         self.client_id = client_id
         self.client_secret = client_secret
         self.redirect_uri = redirect_uri
