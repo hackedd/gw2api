@@ -23,7 +23,8 @@ class TestAuthenticated(unittest.TestCase):
         gw2api.v2.account.set_token(None)
         with self.assertRaises(Exception) as context:
             gw2api.v2.account.get()
-        self.assertIn("endpoint requires authentication", str(context.exception))
+        self.assertIn("endpoint requires authentication",
+                      str(context.exception))
 
     def test_account(self):
         if not self.api_key:
@@ -35,3 +36,14 @@ class TestAuthenticated(unittest.TestCase):
         self.assertIn("id", response)
         self.assertIn("name", response)
         self.assertIn("world", response)
+
+    def test_transactions(self):
+        if not self.api_key:
+            self.skipTest("No authorization token found")
+
+        gw2api.v2.transactions.set_token(self.api_key)
+
+        gw2api.v2.transactions.current_buys()
+        gw2api.v2.transactions.current_sells()
+        gw2api.v2.transactions.history_buys()
+        gw2api.v2.transactions.history_sells()
