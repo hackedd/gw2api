@@ -7,7 +7,24 @@ from .util import ListWrapper
 from ..util import mtime
 
 
+class ListResponse(list):
+    def __init__(self, data, meta):
+        super(ListResponse, self).__init__(data)
+        self.meta = meta
+
+
+class DictResponse(dict):
+    def __init__(self, data, meta):
+        super(DictResponse, self).__init__(data)
+        self.meta = meta
+
+
 class EndpointBase(object):
+    response_types = {
+        list: ListResponse,
+        dict: DictResponse,
+    }
+
     def __init__(self, name):
         super(EndpointBase, self).__init__()
         self.name = name
@@ -27,32 +44,54 @@ class EndpointBase(object):
             cache_file = os.path.join(gw2api.cache_dir, cache_name)
             if mtime(cache_file) >= time.time() - gw2api.cache_time:
                 with open(cache_file, "r") as fp:
-                    return json.load(fp)
+                    tmp = json.load(fp)
+                return self.make_response(tmp["data"], tmp["meta"])
         else:
             cache_file = None
 
-        data = self._get(path, **kwargs)
+        meta, data = self._get(path, **kwargs)
 
         if cache_file:
             with open(cache_file, "w") as fp:
-                json.dump(data, fp, indent=2)
+                json.dump({"meta": meta, "data": data}, fp, indent=2)
 
-        return data
+        return self.make_response(data, meta)
 
     def _get(self, path, **kwargs):
         r = gw2api.session.get(gw2api.v2.BASE_URL + path, **kwargs)
 
-        if not r.ok:
-            try:
-                response = r.json()
-            except ValueError:  # pragma: no cover
-                response = None
+        try:
+            response = r.json()
+        except ValueError:  # pragma: no cover
+            response = None
 
-            if isinstance(response, dict) and "text" in response:
-                r.reason = response["text"]
+        if not r.ok and isinstance(response, dict) and "text" in response:
+            r.reason = response["text"]
 
         r.raise_for_status()
-        return r.json()
+
+        return self.get_metadata(r), response
+
+    def get_metadata(self, r):
+        metadata = {}
+
+        for key, link in r.links.iteritems():
+            metadata[key] = link["url"]
+
+        if "x-page-total" in r.headers:
+            metadata["page_total"] = int(r.headers["x-page-total"])
+        if "x-page-size" in r.headers:
+            metadata["page_size"] = int(r.headers["x-page-size"])
+        if "x-result-total" in r.headers:
+            metadata["result_total"] = int(r.headers["x-result-total"])
+        if "x-result-count" in r.headers:
+            metadata["result_count"] = int(r.headers["x-result-count"])
+
+        return metadata
+
+    def make_response(self, data, meta):
+        response_type = self.response_types.get(type(data))
+        return response_type(data, meta) if response_type else data
 
 
 class Endpoint(EndpointBase):

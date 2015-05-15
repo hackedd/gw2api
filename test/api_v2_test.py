@@ -46,6 +46,20 @@ class TestApi2(unittest.TestCase):
         quaggans = gw2api.v2.quaggans.get_all()
         self.assertEqual(len(ids), len(quaggans))
 
+    def test_quaggan_metadata(self):
+        page = gw2api.v2.quaggans.page(page_size=5)
+        self.assertEqual(len(page), 5)
+
+        self.assertEqual(page.meta["self"], "/v2/quaggans?page=0&page_size=5")
+        self.assertEqual(page.meta["next"], "/v2/quaggans?page=1&page_size=5")
+        self.assertEqual(page.meta["first"], "/v2/quaggans?page=0&page_size=5")
+        self.assertEqual(page.meta["last"], "/v2/quaggans?page=6&page_size=5")
+
+        self.assertEqual(page.meta["page_size"], 5)
+        self.assertEqual(page.meta["page_total"], 7)
+        self.assertEqual(page.meta["result_total"], 35)
+        self.assertEqual(page.meta["result_count"], 5)
+
     def test_getting_color_ids(self):
         color_ids = gw2api.v2.colors.get_ids()
         self.assertIsInstance(color_ids, list)
@@ -108,8 +122,7 @@ class TestApi2(unittest.TestCase):
             self.assertIn(gold_ore_id,
                           [i["item_id"] for i in recipe["ingredients"]])
 
-        recipes = gw2api.v2.recipe_search.input(gold_ore_id,
-                                                       details=True)
+        recipes = gw2api.v2.recipe_search.input(gold_ore_id, details=True)
         self.assertEqual(len(recipe_ids), len(recipes))
         for recipe in recipes:
             self.assertIn(gold_ore_id,
