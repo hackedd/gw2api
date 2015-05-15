@@ -7,9 +7,9 @@ from .util import ListWrapper
 from ..util import mtime
 
 
-class Endpoint(object):
+class EndpointBase(object):
     def __init__(self, name):
-        super(Endpoint, self).__init__()
+        super(EndpointBase, self).__init__()
         self.name = name
 
     def has_cached(self, cache_name):
@@ -47,12 +47,15 @@ class Endpoint(object):
                 response = r.json()
             except ValueError:  # pragma: no cover
                 response = None
+
             if isinstance(response, dict) and "text" in response:
                 r.reason = response["text"]
 
         r.raise_for_status()
         return r.json()
 
+
+class Endpoint(EndpointBase):
     def get_ids(self):
         return self.get_cached(self.name, self.name + ".json")
 

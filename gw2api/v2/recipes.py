@@ -1,7 +1,7 @@
-from .endpoint import Endpoint
+from .endpoint import EndpointBase
 
 
-class RecipeSearchEndpoint(Endpoint):
+class RecipeSearchEndpoint(EndpointBase):
     def __init__(self, recipe_endpoint):
         super(RecipeSearchEndpoint, self).__init__("recipes/search")
         self.recipe_endpoint = recipe_endpoint
