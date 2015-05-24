@@ -12,12 +12,11 @@ LANGUAGES = {
 
 from .endpoint import Endpoint, LocaleAwareEndpoint
 from .recipes import RecipeSearchEndpoint
-from .account import AccountEndpoint
+from .account import AccountEndpoint, CharacterEndpoint
 from .transactions import TransactionEndpoint
 
 
 build = Endpoint("build")
-characters = Endpoint("characters")
 colors = LocaleAwareEndpoint("colors")
 exchange = Endpoint("commerce/exchange")
 listings = Endpoint("commerce/listings")
@@ -39,4 +38,5 @@ wvw_matches = Endpoint("wvw/matches")
 wvw_objectives = LocaleAwareEndpoint("wvw/objectives")
 
 account = AccountEndpoint("account")
+characters = CharacterEndpoint("characters")
 transactions = TransactionEndpoint("commerce/transactions")

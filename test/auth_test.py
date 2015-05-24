@@ -47,3 +47,17 @@ class TestAuthenticated(unittest.TestCase):
         gw2api.v2.transactions.current_sells()
         gw2api.v2.transactions.history_buys()
         gw2api.v2.transactions.history_sells()
+
+    def test_characters(self):
+        if not self.api_key:
+            self.skipTest("No authorization token found")
+
+        gw2api.v2.characters.set_token(self.api_key)
+
+        character_names = gw2api.v2.characters.get_ids()
+        self.assertIsInstance(character_names, list)
+        self.assertIsInstance(character_names[0], basestring)
+
+        character = gw2api.v2.characters.get(character_names[0])
+        self.assertIsInstance(character, dict)
+        self.assertEqual(character["name"], character_names[0])

@@ -1,7 +1,7 @@
 import urllib
 import warnings
 
-from .endpoint import EndpointBase
+from .endpoint import EndpointBase, Endpoint
 
 import gw2api
 
@@ -45,7 +45,7 @@ class AuthenticationHelper(object):
         return r.json()
 
 
-class AuthenticatedEndpointBase(EndpointBase):
+class AuthenticatedMixin(object):
     token = None
 
     @classmethod
@@ -56,9 +56,13 @@ class AuthenticatedEndpointBase(EndpointBase):
         if self.token:
             headers = kwargs.setdefault("headers", {})
             headers.setdefault("Authorization", "Bearer " + self.token)
-        return super(AuthenticatedEndpointBase, self)._get(path, **kwargs)
+        return super(AuthenticatedMixin, self)._get(path, **kwargs)
 
 
-class AccountEndpoint(AuthenticatedEndpointBase):
+class AccountEndpoint(AuthenticatedMixin, EndpointBase):
     def get(self):
         return self.get_cached(self.name, None)
+
+
+class CharacterEndpoint(AuthenticatedMixin, Endpoint):
+    pass

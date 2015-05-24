@@ -1,8 +1,9 @@
-from .account import AuthenticatedEndpointBase
+from .endpoint import EndpointBase
+from .account import AuthenticatedMixin
 from .util import ListWrapper
 
 
-class TransactionEndpoint(AuthenticatedEndpointBase):
+class TransactionEndpoint(AuthenticatedMixin, EndpointBase):
     def page(self, page, page_size, suffix):
         path = self.name + "/" + suffix
         params = {"page": page, "page_size": page_size}
