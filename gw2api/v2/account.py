@@ -9,15 +9,21 @@ class AuthenticatedMixin(object):
         cls.token = token
 
     def _get(self, path, **kwargs):
-        if self.token:
+        token = kwargs.pop("token") if "token" in kwargs else self.token
+        if token:
             headers = kwargs.setdefault("headers", {})
-            headers.setdefault("Authorization", "Bearer " + self.token)
+            headers.setdefault("Authorization", "Bearer " + token)
         return super(AuthenticatedMixin, self)._get(path, **kwargs)
 
 
 class AccountEndpoint(AuthenticatedMixin, EndpointBase):
     def get(self):
         return self.get_cached(self.name, None)
+
+
+class TokenInfoEndpoint(AuthenticatedMixin, EndpointBase):
+    def get(self, token=None):
+        return self.get_cached(self.name, None, token=token)
 
 
 class CharacterEndpoint(AuthenticatedMixin, Endpoint):

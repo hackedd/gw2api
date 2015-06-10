@@ -37,6 +37,15 @@ class TestAuthenticated(unittest.TestCase):
         self.assertIn("name", response)
         self.assertIn("world", response)
 
+    def test_token_info(self):
+        if not self.api_key:
+            self.skipTest("No authorization token found")
+
+        response = gw2api.v2.token_info.get(self.api_key)
+        self.assertTrue(self.api_key.startswith(response["id"]))
+        self.assertIn("name", response)
+        self.assertIn("permissions", response)
+
     def test_transactions(self):
         if not self.api_key:
             self.skipTest("No authorization token found")
