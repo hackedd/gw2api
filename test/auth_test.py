@@ -37,6 +37,12 @@ class TestAuthenticated(unittest.TestCase):
         self.assertIn("name", response)
         self.assertIn("world", response)
 
+        bank = gw2api.v2.account.get_bank()
+        self.assertIsInstance(bank, list)
+
+        materials = gw2api.v2.account.get_materials()
+        self.assertIsInstance(materials, list)
+
     def test_token_info(self):
         if not self.api_key:
             self.skipTest("No authorization token found")
@@ -67,6 +73,14 @@ class TestAuthenticated(unittest.TestCase):
         self.assertIsInstance(character_names, list)
         self.assertIsInstance(character_names[0], basestring)
 
-        character = gw2api.v2.characters.get(character_names[0])
+        character_name = character_names[0]
+
+        character = gw2api.v2.characters.get(character_name)
         self.assertIsInstance(character, dict)
-        self.assertEqual(character["name"], character_names[0])
+        self.assertEqual(character["name"], character_name)
+
+        inventory = gw2api.v2.characters.get_inventory(character_name)
+        self.assertIsInstance(inventory, list)
+
+        equipment = gw2api.v2.characters.get_equipment(character_name)
+        self.assertIsInstance(equipment, list)

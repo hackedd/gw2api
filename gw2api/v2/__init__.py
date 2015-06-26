@@ -36,6 +36,7 @@ skins = LocaleAwareEndpoint("skins")
 worlds = LocaleAwareEndpoint("worlds")
 wvw_matches = Endpoint("wvw/matches")
 wvw_objectives = LocaleAwareEndpoint("wvw/objectives")
+materials = LocaleAwareEndpoint("materials")
 
 account = AccountEndpoint("account")
 token_info = TokenInfoEndpoint("tokeninfo")

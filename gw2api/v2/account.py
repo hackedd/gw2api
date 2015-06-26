@@ -20,6 +20,12 @@ class AccountEndpoint(AuthenticatedMixin, EndpointBase):
     def get(self):
         return self.get_cached(self.name, None)
 
+    def get_bank(self):
+        return self.get_cached(self.name + "/bank", None)
+
+    def get_materials(self):
+        return self.get_cached(self.name + "/materials", None)
+
 
 class TokenInfoEndpoint(AuthenticatedMixin, EndpointBase):
     def get(self, token=None):
@@ -27,4 +33,10 @@ class TokenInfoEndpoint(AuthenticatedMixin, EndpointBase):
 
 
 class CharacterEndpoint(AuthenticatedMixin, Endpoint):
-    pass
+    def get_inventory(self, id):
+        name = "%s/%s/inventory" % (self.name, id)
+        return self.get_cached(name, None).get("bags")
+
+    def get_equipment(self, id):
+        name = "%s/%s/equipment" % (self.name, id)
+        return self.get_cached(name, None).get("equipment")
