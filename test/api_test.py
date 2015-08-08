@@ -92,7 +92,9 @@ class TestApi(unittest.TestCase):
     def test_events(self):
         event_names = gw2api.event_names()
         self.assertIsInstance(event_names, dict)
-        event_id, event_name = event_names.items()[0]
+
+        event_id = "5161DE97-FAB6-4916-8788-65E9F4FAF333"
+        event_name = "Recover the stolen LUM0009 golems from the Inquest."
 
         event_details = gw2api.event_details()
         self.assertIsInstance(event_details, dict)
@@ -101,6 +103,7 @@ class TestApi(unittest.TestCase):
         event_details = gw2api.event_details(event_id)
         self.assertIsInstance(event_details, dict)
         self.assertIn("name", event_details)
+        self.assertEqual(event_details["name"], event_name)
 
     def test_guild(self):
         keys = ["emblem", "guild_id", "guild_name", "tag"]
