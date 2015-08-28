@@ -138,3 +138,11 @@ class TestApi2(unittest.TestCase):
         self.assertEqual(len(recipe_ids), len(recipes))
         for recipe in recipes:
             self.assertEqual(recipe["output_item_id"], gold_ingot_id)
+
+    def test_currencies(self):
+        currencies = gw2api.v2.currencies.get_all()
+        self.assertIsInstance(currencies, list)
+
+        coin = gw2api.v2.currencies.get(1)
+        self.assertIn(coin, currencies)
+        self.assertEqual("Coin", coin["name"])

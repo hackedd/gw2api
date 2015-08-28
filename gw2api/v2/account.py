@@ -32,6 +32,9 @@ class AccountEndpoint(AuthenticatedMixin, EndpointBase):
     def get_skins(self):
         return self.get_cached(self.name + "/skins", None)
 
+    def get_wallet(self):
+        return self.get_cached(self.name + "/wallet", None)
+
 
 class TokenInfoEndpoint(AuthenticatedMixin, EndpointBase):
     def get(self, token=None):
