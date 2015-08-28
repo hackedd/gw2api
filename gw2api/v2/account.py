@@ -26,6 +26,12 @@ class AccountEndpoint(AuthenticatedMixin, EndpointBase):
     def get_materials(self):
         return self.get_cached(self.name + "/materials", None)
 
+    def get_dyes(self):
+        return self.get_cached(self.name + "/dyes", None)
+
+    def get_skins(self):
+        return self.get_cached(self.name + "/skins", None)
+
 
 class TokenInfoEndpoint(AuthenticatedMixin, EndpointBase):
     def get(self, token=None):

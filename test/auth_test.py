@@ -43,6 +43,12 @@ class TestAuthenticated(unittest.TestCase):
         materials = gw2api.v2.account.get_materials()
         self.assertIsInstance(materials, list)
 
+        dyes = gw2api.v2.account.get_dyes()
+        self.assertIsInstance(dyes, list)
+
+        skins = gw2api.v2.account.get_skins()
+        self.assertIsInstance(skins, list)
+
     def test_token_info(self):
         if not self.api_key:
             self.skipTest("No authorization token found")
