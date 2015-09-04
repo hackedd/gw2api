@@ -12,7 +12,8 @@ LANGUAGES = {
 
 from .endpoint import Endpoint, LocaleAwareEndpoint
 from .recipes import RecipeSearchEndpoint
-from .account import AccountEndpoint, TokenInfoEndpoint, CharacterEndpoint
+from .account import (AuthenticatedEndpoint, AccountEndpoint,
+                      TokenInfoEndpoint, CharacterEndpoint, PvpStatsEndpoint)
 from .transactions import TransactionEndpoint
 
 
@@ -45,3 +46,5 @@ account = AccountEndpoint("account")
 token_info = TokenInfoEndpoint("tokeninfo")
 characters = CharacterEndpoint("characters")
 transactions = TransactionEndpoint("commerce/transactions")
+pvp_games = AuthenticatedEndpoint("pvp/games")
+pvp_stats = PvpStatsEndpoint("pvp/stats")

@@ -16,6 +16,10 @@ class AuthenticatedMixin(object):
         return super(AuthenticatedMixin, self)._get(path, **kwargs)
 
 
+class AuthenticatedEndpoint(AuthenticatedMixin, Endpoint):
+    pass
+
+
 class AccountEndpoint(AuthenticatedMixin, EndpointBase):
     def get(self):
         return self.get_cached(self.name, None)
@@ -49,3 +53,8 @@ class CharacterEndpoint(AuthenticatedMixin, Endpoint):
     def get_equipment(self, id):
         name = "%s/%s/equipment" % (self.name, id)
         return self.get_cached(name, None).get("equipment")
+
+
+class PvpStatsEndpoint(AuthenticatedMixin, EndpointBase):
+    def get(self):
+        return self.get_cached(self.name, None)
