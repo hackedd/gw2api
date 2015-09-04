@@ -54,6 +54,10 @@ class CharacterEndpoint(AuthenticatedMixin, Endpoint):
         name = "%s/%s/equipment" % (self.name, id)
         return self.get_cached(name, None).get("equipment")
 
+    def get_specializations(self, id):
+        name = "%s/%s/specializations" % (self.name, id)
+        return self.get_cached(name, None).get("specializations")
+
 
 class PvpStatsEndpoint(AuthenticatedMixin, EndpointBase):
     def get(self):

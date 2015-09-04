@@ -94,6 +94,10 @@ class TestAuthenticated(unittest.TestCase):
         equipment = gw2api.v2.characters.get_equipment(character_name)
         self.assertIsInstance(equipment, list)
 
+        spec = gw2api.v2.characters.get_specializations(character_name)
+        self.assertIsInstance(spec, dict)
+        self.assertEqual(sorted(spec.keys()), ["pve", "pvp", "wvw"])
+
     def test_pvp(self):
         if not self.api_key:
             self.skipTest("No authorization token found")
