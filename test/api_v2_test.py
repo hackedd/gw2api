@@ -146,3 +146,12 @@ class TestApi2(unittest.TestCase):
         coin = gw2api.v2.currencies.get(1)
         self.assertIn(coin, currencies)
         self.assertEqual("Coin", coin["name"])
+
+    def test_wvw(self):
+        objective_ids = gw2api.v2.wvw_objectives.get_ids()
+        self.assertIsInstance(objective_ids, list)
+
+        objective = gw2api.v2.wvw_objectives.get(objective_ids[0])
+        self.assertIn("name", objective)
+        self.assertIn("type", objective)
+        self.assertIn("coord", objective)
