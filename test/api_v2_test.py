@@ -164,3 +164,8 @@ class TestApi2(unittest.TestCase):
         self.assertIsInstance(achievement, dict)
         self.assertIn("name", achievement)
         self.assertIn("requirement", achievement)
+
+        daily_achievements = gw2api.v2.achievements.get("daily")
+        self.assertIsInstance(daily_achievements, dict)
+        self.assertEqual(["pve", "pvp", "wvw"],
+                         sorted(daily_achievements.keys()))
