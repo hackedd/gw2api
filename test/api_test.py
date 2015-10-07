@@ -47,7 +47,8 @@ class TestApi(unittest.TestCase):
         self.assertIsInstance(key, basestring)
         self.assertIsInstance(value, dict)
         self.assertEqual(sorted(value.keys()),
-                         ["base_rgb", "cloth", "leather", "metal", "name"])
+                         ["base_rgb", "categories", "cloth", "item",
+                          "leather", "metal", "name"])
         self.assertEqual(sorted(value["cloth"].keys()),
                          ["brightness", "contrast", "hue", "lightness", "rgb",
                           "saturation"])
