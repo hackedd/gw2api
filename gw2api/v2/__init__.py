@@ -41,6 +41,7 @@ wvw_matches = Endpoint("wvw/matches")
 wvw_objectives = LocaleAwareEndpoint("wvw/objectives")
 materials = LocaleAwareEndpoint("materials")
 currencies = LocaleAwareEndpoint("currencies")
+achievements = LocaleAwareEndpoint("achievements")
 
 account = AccountEndpoint("account")
 token_info = TokenInfoEndpoint("tokeninfo")

@@ -155,3 +155,12 @@ class TestApi2(unittest.TestCase):
         self.assertIn("name", objective)
         self.assertIn("type", objective)
         self.assertIn("coord", objective)
+
+    def test_achievements(self):
+        achievement_ids = gw2api.v2.achievements.get_ids()
+        self.assertIsInstance(achievement_ids, list)
+
+        achievement = gw2api.v2.achievements.get(achievement_ids[0])
+        self.assertIsInstance(achievement, dict)
+        self.assertIn("name", achievement)
+        self.assertIn("requirement", achievement)
