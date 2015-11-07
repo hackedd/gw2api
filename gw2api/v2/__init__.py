@@ -15,6 +15,7 @@ from .recipes import RecipeSearchEndpoint
 from .account import (AuthenticatedEndpoint, AccountEndpoint,
                       TokenInfoEndpoint, CharacterEndpoint, PvpStatsEndpoint)
 from .transactions import TransactionEndpoint
+from .wvw import WvwMatchesEndpoint
 
 
 build = Endpoint("build")
@@ -37,7 +38,7 @@ skins = LocaleAwareEndpoint("skins")
 specializations = LocaleAwareEndpoint("specializations")
 traits = LocaleAwareEndpoint("traits")
 worlds = LocaleAwareEndpoint("worlds")
-wvw_matches = Endpoint("wvw/matches")
+wvw_matches = WvwMatchesEndpoint("wvw/matches")
 wvw_objectives = LocaleAwareEndpoint("wvw/objectives")
 materials = LocaleAwareEndpoint("materials")
 currencies = LocaleAwareEndpoint("currencies")

@@ -156,6 +156,19 @@ class TestApi2(unittest.TestCase):
         self.assertIn("type", objective)
         # self.assertIn("coord", objective)
 
+        match_ids = gw2api.v2.wvw_matches.get_ids()
+        self.assertIsInstance(match_ids, list)
+
+        match = gw2api.v2.wvw_matches.get(match_ids[0])
+        self.assertIn("id", match)
+        self.assertIn("start_time", match)
+        self.assertIn("end_time", match)
+
+        match = gw2api.v2.wvw_matches.world(1007)
+        self.assertIn("id", match)
+        self.assertIn("start_time", match)
+        self.assertIn("end_time", match)
+
     def test_achievements(self):
         achievement_ids = gw2api.v2.achievements.get_ids()
         self.assertIsInstance(achievement_ids, list)
