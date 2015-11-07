@@ -52,6 +52,9 @@ class TestAuthenticated(unittest.TestCase):
         wallet = gw2api.v2.account.get_wallet()
         self.assertIsInstance(wallet, list)
 
+        minis = gw2api.v2.account.get_minis()
+        self.assertIsInstance(minis, list)
+
     def test_token_info(self):
         if not self.api_key:
             self.skipTest("No authorization token found")

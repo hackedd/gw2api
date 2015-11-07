@@ -39,6 +39,9 @@ class AccountEndpoint(AuthenticatedMixin, EndpointBase):
     def get_wallet(self):
         return self.get_cached(self.name + "/wallet", None)
 
+    def get_minis(self):
+        return self.get_cached(self.name + "/minis", None)
+
 
 class TokenInfoEndpoint(AuthenticatedMixin, EndpointBase):
     def get(self, token=None):

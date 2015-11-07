@@ -43,6 +43,7 @@ wvw_objectives = LocaleAwareEndpoint("wvw/objectives")
 materials = LocaleAwareEndpoint("materials")
 currencies = LocaleAwareEndpoint("currencies")
 achievements = LocaleAwareEndpoint("achievements")
+minis = LocaleAwareEndpoint("minis")
 
 account = AccountEndpoint("account")
 token_info = TokenInfoEndpoint("tokeninfo")

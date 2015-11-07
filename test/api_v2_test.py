@@ -182,3 +182,8 @@ class TestApi2(unittest.TestCase):
         self.assertIsInstance(daily_achievements, dict)
         self.assertEqual(["pve", "pvp", "wvw"],
                          sorted(daily_achievements.keys()))
+
+    def test_minis(self):
+        mini = gw2api.v2.minis.get(1)
+        self.assertEqual("Miniature Rytlock", mini["name"])
+        self.assertEqual(21047, mini["item_id"])
