@@ -8,7 +8,7 @@ def read(fname):
         return fp.read()
 
 setup(name="gw2api",
-      version="1.0.4",
+      version="1.0.5",
       description="Guild Wars 2 API",
       author="Paul Hooijenga",
       author_email="paulhooijenga@gmail.com",
