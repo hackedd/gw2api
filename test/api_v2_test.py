@@ -1,4 +1,5 @@
 import unittest
+import requests
 
 import gw2api.v2
 
@@ -187,3 +188,20 @@ class TestApi2(unittest.TestCase):
         mini = gw2api.v2.minis.get(1)
         self.assertEqual("Miniature Rytlock", mini["name"])
         self.assertEqual(21047, mini["item_id"])
+
+    def test_emblem_workaround(self):
+        # https://api.guildwars2.com/v2/emblem/foregrounds/1 is 404, but
+        # https://api.guildwars2.com/v2/emblem/foregrounds?id=1 works
+        endpoint = gw2api.v2.Endpoint("emblem/foregrounds")
+        with self.assertRaises(requests.HTTPError) as context:
+            endpoint.get_one(1)
+        self.assertEqual(context.exception.response.status_code, 404)
+
+    def test_emblems(self):
+        foreground = gw2api.v2.emblem_foregrounds.get(71)
+        self.assertIn("id", foreground)
+        self.assertIn("layers", foreground)
+
+        background = gw2api.v2.emblem_foregrounds.get(2)
+        self.assertIn("id", background)
+        self.assertIn("layers", background)

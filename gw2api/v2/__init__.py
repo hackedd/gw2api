@@ -16,6 +16,7 @@ from .account import (AuthenticatedEndpoint, AccountEndpoint,
                       TokenInfoEndpoint, CharacterEndpoint, PvpStatsEndpoint)
 from .transactions import TransactionEndpoint
 from .wvw import WvwMatchesEndpoint
+from .emblem import EmblemEndpoint
 
 
 build = Endpoint("build")
@@ -44,6 +45,8 @@ materials = LocaleAwareEndpoint("materials")
 currencies = LocaleAwareEndpoint("currencies")
 achievements = LocaleAwareEndpoint("achievements")
 minis = LocaleAwareEndpoint("minis")
+emblem_foregrounds = EmblemEndpoint("emblem/foregrounds")
+emblem_backgrounds = EmblemEndpoint("emblem/backgrounds")
 
 account = AccountEndpoint("account")
 token_info = TokenInfoEndpoint("tokeninfo")
