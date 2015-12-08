@@ -197,3 +197,11 @@ class TestApi2(unittest.TestCase):
         background = gw2api.v2.emblem_foregrounds.get(2)
         self.assertIn("id", background)
         self.assertIn("layers", background)
+
+    def test_guild_upgrades(self):
+        upgrade = gw2api.v2.guild_upgrades.get(38)
+        self.assertEqual("Guild Armorer 1", upgrade["name"])
+        self.assertIn("description", upgrade)
+        self.assertIn("icon", upgrade)
+        self.assertIn("costs", upgrade)
+        self.assertIn("prerequisites", upgrade)
