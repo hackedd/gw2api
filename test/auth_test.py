@@ -1,5 +1,6 @@
 import os
 import json
+import requests
 
 import unittest
 
@@ -118,3 +119,19 @@ class TestAuthenticated(unittest.TestCase):
 
         games = gw2api.v2.pvp_games.get_ids()
         self.assertIsInstance(games, list)
+
+        game = gw2api.v2.pvp_games.get(games[0])
+        self.assertIsInstance(game, dict)
+
+    def test_pvp_game_workaround(self):
+        if not self.api_key:
+            self.skipTest("No authorization token found")
+
+        # https://api.guildwars2.com/v2/pvp/games/xyz is 404, but
+        # https://api.guildwars2.com/v2/pvp/games?id=xyz works
+        endpoint = gw2api.v2.AuthenticatedEndpoint("pvp/games")
+        endpoint.set_token(self.api_key)
+        games = endpoint.get_ids()
+        with self.assertRaises(requests.HTTPError) as context:
+            endpoint.get_one(games[0])
+        self.assertEqual(context.exception.response.status_code, 404)
