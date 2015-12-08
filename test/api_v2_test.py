@@ -184,6 +184,17 @@ class TestApi2(unittest.TestCase):
         self.assertEqual(["pve", "pvp", "wvw"],
                          sorted(daily_achievements.keys()))
 
+    def test_achievement_groups(self):
+        story_group_id = "A4ED8379-5B6B-4ECC-B6E1-70C350C902D2"
+        self.assertIn(story_group_id, gw2api.v2.achievement_groups.get_ids())
+        story_group = gw2api.v2.achievement_groups.get(story_group_id)
+        self.assertEqual("Story Journal", story_group["name"])
+
+    def test_achievement_categories(self):
+        self.assertIn(1, gw2api.v2.achievement_categories.get_ids())
+        story_group = gw2api.v2.achievement_categories.get(1)
+        self.assertEqual("Slayer", story_group["name"])
+
     def test_minis(self):
         mini = gw2api.v2.minis.get(1)
         self.assertEqual("Miniature Rytlock", mini["name"])
