@@ -216,3 +216,9 @@ class TestApi2(unittest.TestCase):
         self.assertIn("icon", upgrade)
         self.assertIn("costs", upgrade)
         self.assertIn("prerequisites", upgrade)
+
+    def test_guild_permissions(self):
+        self.assertIn("Admin", gw2api.v2.guild_permissions.get_ids())
+        admin_permission = gw2api.v2.guild_permissions.get("Admin")
+        self.assertEqual("Admin Lower Ranks.", admin_permission["name"])
+        self.assertIn("description", admin_permission)

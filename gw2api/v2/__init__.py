@@ -50,6 +50,7 @@ minis = LocaleAwareEndpoint("minis")
 emblem_foregrounds = Endpoint("emblem/foregrounds")
 emblem_backgrounds = Endpoint("emblem/backgrounds")
 guild_upgrades = LocaleAwareEndpoint("guild/upgrades")
+guild_permissions = LocaleAwareEndpoint("guild/permissions")
 
 account = AccountEndpoint("account")
 token_info = TokenInfoEndpoint("tokeninfo")
