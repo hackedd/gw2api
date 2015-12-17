@@ -138,3 +138,20 @@ class TestAuthenticated(unittest.TestCase):
         with self.assertRaises(requests.HTTPError) as context:
             endpoint.get_one(games[0])
         self.assertEqual(context.exception.response.status_code, 404)
+
+    def test_guild(self):
+        if not self.api_key:
+            self.skipTest("No authorization token found")
+
+        gw2api.v2.guild.set_token(self.api_key)
+
+        # This endpoint only works if you're the guild leader...
+        guild_id = "7F1FC74C-8BDB-E411-A278-AC162DC0070D"
+
+        ranks = gw2api.v2.guild.get_ranks(guild_id)
+        self.assertIsInstance(ranks, list)
+        rank_names = [rank["id"] for rank in ranks]
+        self.assertIn("Leader", rank_names)
+
+        members = gw2api.v2.guild.get_members(guild_id)
+        self.assertIsInstance(members, list)

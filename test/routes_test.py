@@ -27,6 +27,8 @@ def get_endpoints():
                                             gw2api.v2.AccountEndpoint))
     endpoints.update(get_prefixed_endpoints("characters/:id/",
                                             gw2api.v2.CharacterEndpoint))
+    endpoints.update(get_prefixed_endpoints("guild/:id/",
+                                            gw2api.v2.GuildEndpoint))
 
     return endpoints
 

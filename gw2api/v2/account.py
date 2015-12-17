@@ -51,7 +51,7 @@ class TokenInfoEndpoint(AuthenticatedMixin, EndpointBase):
         return self.get_cached(self.name, None, token=token)
 
 
-class CharacterEndpoint(AuthenticatedMixin, Endpoint):
+class CharacterEndpoint(AuthenticatedEndpoint):
     def get_inventory(self, id):
         name = "%s/%s/inventory" % (self.name, id)
         return self.get_cached(name, None).get("bags")
@@ -80,3 +80,13 @@ class PvpGamesEndpoint(AuthenticatedEndpoint):
 class PvpStatsEndpoint(AuthenticatedMixin, EndpointBase):
     def get(self):
         return self.get_cached(self.name, None)
+
+
+class GuildEndpoint(AuthenticatedEndpoint):
+    def get_ranks(self, id):
+        name = "%s/%s/ranks" % (self.name, id)
+        return self.get_cached(name, None)
+
+    def get_members(self, id):
+        name = "%s/%s/members" % (self.name, id)
+        return self.get_cached(name, None)

@@ -14,7 +14,7 @@ from .endpoint import Endpoint, LocaleAwareEndpoint
 from .recipes import RecipeSearchEndpoint
 from .account import (AuthenticatedEndpoint, AccountEndpoint,
                       TokenInfoEndpoint, CharacterEndpoint,
-                      PvpGamesEndpoint, PvpStatsEndpoint)
+                      PvpGamesEndpoint, PvpStatsEndpoint, GuildEndpoint)
 from .transactions import TransactionEndpoint
 from .wvw import WvwMatchesEndpoint
 
@@ -59,3 +59,4 @@ characters = CharacterEndpoint("characters")
 transactions = TransactionEndpoint("commerce/transactions")
 pvp_games = PvpGamesEndpoint("pvp/games")
 pvp_stats = PvpStatsEndpoint("pvp/stats")
+guild = GuildEndpoint("guild")
