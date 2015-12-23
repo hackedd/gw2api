@@ -69,41 +69,33 @@ class TestUtil(unittest.TestCase):
         self.assertEqual(gw2api.encode_chat_link("map", id=825),
                          "[&BDkDAAA=]")
 
-        # Skill: Aegis (Id: 743)
-        self.assertEqual(gw2api.encode_chat_link("skill", id=743),
-                         "[&B+cCAAA=]")
+        # Skill: Blood Curse (Id: 10698)
+        self.assertEqual(gw2api.encode_chat_link("skill", id=10698),
+                         "[&BsopAAA=]")
 
-        # Skill: Fireball (Id: 5491)
-        self.assertEqual(gw2api.encode_chat_link("skill", id=5491),
-                         "[&B3MVAAA=]")
+        # Skill: Dusk Strike (Id: 29705)
+        self.assertEqual(gw2api.encode_chat_link("skill", id=29705),
+                         "[&Bgl0AAA=]")
 
-        # Skill: Meteor Shower (Id: 5501)
-        self.assertEqual(gw2api.encode_chat_link("skill", id=5501),
-                         "[&B30VAAA=]")
+        # Trait: Furious Demise (Id: 803)
+        self.assertEqual(gw2api.encode_chat_link("trait", id=803),
+                         "[&ByMDAAA=]")
 
-        # Trait: Opening Strike (Id: 1010)
-        self.assertEqual(gw2api.encode_chat_link("trait", id=1010),
-                         "[&CPIDAAA=]")
-
-        # Recipe: Soft Wood Plank (Id: 1)
-        self.assertEqual(gw2api.encode_chat_link("recipe", id=1),
+        # Skin: Chainmail Leggings (Id: 1)
+        self.assertEqual(gw2api.encode_chat_link("skin", id=1),
                          "[&CgEAAAA=]")
 
-        # Recipe: Ancient Wood Planks (Id: 2)
-        self.assertEqual(gw2api.encode_chat_link("recipe", id=2),
+        # Skin: Chainmail Chestpiece (Id: 2)
+        self.assertEqual(gw2api.encode_chat_link("skin", id=2),
                          "[&CgIAAAA=]")
-
-        # Recipe: Bolts of Cotton (Id: 7)
-        self.assertEqual(gw2api.encode_chat_link("recipe", id=7),
-                         "[&CgcAAAA=]")
-
-        # Skin: Apprentice Coat
-        self.assertEqual(gw2api.encode_chat_link("skin", id=4),
-                         "[&CwQAAAA=]")
 
         # Cook's Outfit
         self.assertEqual(gw2api.encode_chat_link("outfit", id=1),
-                         "[&DAEAAAA=]")
+                         "[&CwEAAAA=]")
+
+        # Witch's Outfit
+        self.assertEqual(gw2api.encode_chat_link("outfit", id=4),
+                         "[&CwQAAAA=]")
 
         with self.assertRaises(Exception) as context:
             gw2api.encode_chat_link(0xff)
@@ -151,23 +143,19 @@ class TestUtil(unittest.TestCase):
         self.assertEqual(gw2api.decode_chat_link("[&BDkDAAA=]"),
                          ("map", {"id": 825}))
         self.assertEqual(gw2api.decode_chat_link("[&B+cCAAA=]"),
-                         ("skill", {"id": 743}))
+                         ("trait", {"id": 743}))
         self.assertEqual(gw2api.decode_chat_link("[&B3MVAAA=]"),
-                         ("skill", {"id": 5491}))
+                         ("trait", {"id": 5491}))
         self.assertEqual(gw2api.decode_chat_link("[&B30VAAA=]"),
-                         ("skill", {"id": 5501}))
-        self.assertEqual(gw2api.decode_chat_link("[&CPIDAAA=]"),
-                         ("trait", {"id": 1010}))
+                         ("trait", {"id": 5501}))
         self.assertEqual(gw2api.decode_chat_link("[&CgEAAAA=]"),
-                         ("recipe", {"id": 1}))
+                         ("skin", {"id": 1}))
         self.assertEqual(gw2api.decode_chat_link("[&CgIAAAA=]"),
-                         ("recipe", {"id": 2}))
+                         ("skin", {"id": 2}))
         self.assertEqual(gw2api.decode_chat_link("[&CgcAAAA=]"),
-                         ("recipe", {"id": 7}))
+                         ("skin", {"id": 7}))
         self.assertEqual(gw2api.decode_chat_link("[&CwQAAAA=]"),
-                         ("skin", {"id": 4}))
-        self.assertEqual(gw2api.decode_chat_link("[&DAEAAAA=]"),
-                         ("outfit", {"id": 1}))
+                         ("outfit", {"id": 4}))
 
     def test_cache(self):
         class CacheMockSession(MockSession):
