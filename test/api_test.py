@@ -43,22 +43,25 @@ class TestApi(unittest.TestCase):
 
         colors = gw2api.colors()
         self.assertIsInstance(colors, dict)
-        key, value = colors.items()[0]
-        self.assertIsInstance(key, basestring)
-        self.assertIsInstance(value, dict)
-        self.assertEqual(sorted(value.keys()),
+
+        self.assertEqual(colors["1"]["name"], "Dye Remover")
+
+        black = colors["2"]
+        self.assertIsInstance(black, dict)
+        self.assertEqual(black["name"], "Black")
+        self.assertEqual(sorted(black.keys()),
                          ["base_rgb", "categories", "cloth", "item",
                           "leather", "metal", "name"])
-        self.assertEqual(sorted(value["cloth"].keys()),
+        self.assertEqual(sorted(black["cloth"].keys()),
                          ["brightness", "contrast", "hue", "lightness", "rgb",
                           "saturation"])
 
         files = gw2api.files()
         self.assertIsInstance(files, dict)
-        key, value = files.items()[0]
+        key, black = files.items()[0]
         self.assertIsInstance(key, basestring)
-        self.assertIsInstance(value, dict)
-        self.assertEqual(sorted(value.keys()), ["file_id", "signature"])
+        self.assertIsInstance(black, dict)
+        self.assertEqual(sorted(black.keys()), ["file_id", "signature"])
 
     def test_skins(self):
         skins = gw2api.skins()
