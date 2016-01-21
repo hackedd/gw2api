@@ -90,3 +90,11 @@ class GuildEndpoint(AuthenticatedEndpoint):
     def get_members(self, id):
         name = "%s/%s/members" % (self.name, id)
         return self.get_cached(name, None)
+
+    def get_stash(self, id):
+        name = "%s/%s/stash" % (self.name, id)
+        return self.get_cached(name, None)
+
+    def get_treasury(self, id):
+        name = "%s/%s/treasury" % (self.name, id)
+        return self.get_cached(name, None)

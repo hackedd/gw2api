@@ -139,14 +139,34 @@ class TestAuthenticated(unittest.TestCase):
             endpoint.get_one(games[0])
         self.assertEqual(context.exception.response.status_code, 404)
 
+    guild_id = None
+
+    def get_guild_id(self):
+        gw2api.v2.account.set_token(self.api_key)
+        gw2api.v2.guild.set_token(self.api_key)
+
+        if self.guild_id is None:
+            # Try to find a guild that we can access with the API key we have.
+            account = gw2api.v2.account.get()
+            for guild_id in account["guilds"]:
+                try:
+                    gw2api.v2.guild.get_members(guild_id)
+                    self.guild_id = guild_id
+                    break
+                except requests.RequestException:
+                    pass
+            else:
+                self.guild_id = ""
+
+        return self.guild_id
+
     def test_guild(self):
         if not self.api_key:
             self.skipTest("No authorization token found")
 
-        gw2api.v2.guild.set_token(self.api_key)
-
-        # This endpoint only works if you're the guild leader...
-        guild_id = "7F1FC74C-8BDB-E411-A278-AC162DC0070D"
+        guild_id = self.get_guild_id()
+        if not guild_id:
+            self.skipTest("No usable guild found")
 
         ranks = gw2api.v2.guild.get_ranks(guild_id)
         self.assertIsInstance(ranks, list)
@@ -155,3 +175,24 @@ class TestAuthenticated(unittest.TestCase):
 
         members = gw2api.v2.guild.get_members(guild_id)
         self.assertIsInstance(members, list)
+
+        treasury = gw2api.v2.guild.get_treasury(guild_id)
+        self.assertIsInstance(treasury, list)
+
+    def test_guild_stash(self):
+        if not self.api_key:
+            self.skipTest("No authorization token found")
+
+        guild_id = self.get_guild_id()
+        if not guild_id:
+            self.skipTest("No usable guild found")
+
+        stash = gw2api.v2.guild.get_stash(guild_id)
+        self.assertIsInstance(stash, list)
+
+        for first_tab in stash:
+            self.assertIsInstance(first_tab, dict)
+            self.assertIn("upgrade_id", first_tab)
+            self.assertIn("size", first_tab)
+            self.assertIn("coins", first_tab)
+            self.assertIn("inventory", first_tab)
