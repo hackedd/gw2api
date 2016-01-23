@@ -179,6 +179,11 @@ class TestAuthenticated(unittest.TestCase):
         treasury = gw2api.v2.guild.get_treasury(guild_id)
         self.assertIsInstance(treasury, list)
 
+        upgrades = gw2api.v2.guild.get_upgrades(guild_id)
+        self.assertIsInstance(upgrades, list)
+        for upgrade_id in upgrades:
+            self.assertIsInstance(upgrade_id, int)
+
     def test_guild_stash(self):
         if not self.api_key:
             self.skipTest("No authorization token found")
