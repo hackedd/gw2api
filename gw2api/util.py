@@ -105,7 +105,8 @@ def encode_chat_link(link_type, **kwargs):
         data = pack(format, link_type, kwargs.get("number", 1), item_id, *args)
 
     elif link_type in (gw2api.TYPE_TEXT, gw2api.TYPE_MAP, gw2api.TYPE_SKILL,
-                       gw2api.TYPE_TRAIT, gw2api.TYPE_SKIN, gw2api.TYPE_OUTFIT):
+                       gw2api.TYPE_TRAIT, gw2api.TYPE_RECIPE,
+                       gw2api.TYPE_SKIN, gw2api.TYPE_OUTFIT):
         data = pack("<BI", link_type, kwargs["id"])
 
     else:
@@ -148,7 +149,8 @@ def decode_chat_link(string):
             link_type_string = key
 
     if link_type in (gw2api.TYPE_TEXT, gw2api.TYPE_MAP, gw2api.TYPE_SKILL,
-                     gw2api.TYPE_TRAIT, gw2api.TYPE_SKIN, gw2api.TYPE_OUTFIT):
+                     gw2api.TYPE_TRAIT, gw2api.TYPE_RECIPE,
+                     gw2api.TYPE_SKIN, gw2api.TYPE_OUTFIT):
         id, = unpack("<I", data[1:])
         return link_type_string, {"id": id}
 

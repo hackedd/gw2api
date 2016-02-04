@@ -81,6 +81,18 @@ class TestUtil(unittest.TestCase):
         self.assertEqual(gw2api.encode_chat_link("trait", id=803),
                          "[&ByMDAAA=]")
 
+        # Recipe: Soft Wood Plank (Id: 1)
+        self.assertEqual(gw2api.encode_chat_link("recipe", id=1),
+                         "[&CQEAAAA=]")
+
+        # Recipe: Ancient Wood Planks (Id: 2)
+        self.assertEqual(gw2api.encode_chat_link("recipe", id=2),
+                         "[&CQIAAAA=]")
+
+        # Recipe: Bolts of Cotton (Id: 7)")
+        self.assertEqual(gw2api.encode_chat_link("recipe", id=7),
+                         "[&CQcAAAA=]")
+
         # Skin: Chainmail Leggings (Id: 1)
         self.assertEqual(gw2api.encode_chat_link("skin", id=1),
                          "[&CgEAAAA=]")
@@ -148,6 +160,12 @@ class TestUtil(unittest.TestCase):
                          ("trait", {"id": 5491}))
         self.assertEqual(gw2api.decode_chat_link("[&B30VAAA=]"),
                          ("trait", {"id": 5501}))
+        self.assertEqual(gw2api.decode_chat_link("[&CQEAAAA=]"),
+                         ("recipe", {"id": 1}))
+        self.assertEqual(gw2api.decode_chat_link("[&CQIAAAA=]"),
+                         ("recipe", {"id": 2}))
+        self.assertEqual(gw2api.decode_chat_link("[&CQcAAAA=]"),
+                         ("recipe", {"id": 7}))
         self.assertEqual(gw2api.decode_chat_link("[&CgEAAAA=]"),
                          ("skin", {"id": 1}))
         self.assertEqual(gw2api.decode_chat_link("[&CgIAAAA=]"),
