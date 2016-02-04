@@ -1,8 +1,6 @@
 import os
-import json
-import requests
-
 import unittest
+import requests
 
 import gw2api
 import gw2api.v2
@@ -10,15 +8,17 @@ import gw2api.v2
 
 class TestAuthenticated(unittest.TestCase):
     token_filename = "api-key.txt"
+    api_key = None
+
+    @classmethod
+    def setUpClass(cls):
+        if os.path.exists(cls.token_filename):
+            with open(cls.token_filename, "r") as fp:
+                cls.api_key = fp.read().strip()
 
     def setUp(self):
-        super(TestAuthenticated, self).setUp()
-
-        if os.path.exists(self.token_filename):
-            with open(self.token_filename, "r") as fp:
-                self.api_key = fp.read().strip()
-        else:
-            self.api_key = None
+        if not self.api_key:
+            self.skipTest("No authorization token found")
 
     def test_account_no_auth(self):
         gw2api.v2.account.set_token(None)
@@ -28,9 +28,6 @@ class TestAuthenticated(unittest.TestCase):
                       str(context.exception))
 
     def test_account(self):
-        if not self.api_key:
-            self.skipTest("No authorization token found")
-
         gw2api.v2.account.set_token(self.api_key)
         response = gw2api.v2.account.get()
         self.assertIsInstance(response, dict)
@@ -60,18 +57,12 @@ class TestAuthenticated(unittest.TestCase):
         self.assertIsInstance(achievements, list)
 
     def test_token_info(self):
-        if not self.api_key:
-            self.skipTest("No authorization token found")
-
         response = gw2api.v2.token_info.get(self.api_key)
         self.assertTrue(self.api_key.startswith(response["id"]))
         self.assertIn("name", response)
         self.assertIn("permissions", response)
 
     def test_transactions(self):
-        if not self.api_key:
-            self.skipTest("No authorization token found")
-
         gw2api.v2.transactions.set_token(self.api_key)
 
         gw2api.v2.transactions.current_buys()
@@ -80,9 +71,6 @@ class TestAuthenticated(unittest.TestCase):
         gw2api.v2.transactions.history_sells()
 
     def test_characters(self):
-        if not self.api_key:
-            self.skipTest("No authorization token found")
-
         gw2api.v2.characters.set_token(self.api_key)
 
         character_names = gw2api.v2.characters.get_ids()
@@ -109,9 +97,6 @@ class TestAuthenticated(unittest.TestCase):
         self.assertIsInstance(recipes, list)
 
     def test_pvp(self):
-        if not self.api_key:
-            self.skipTest("No authorization token found")
-
         gw2api.v2.pvp_stats.set_token(self.api_key)
 
         pvp_stats = gw2api.v2.pvp_stats.get()
@@ -127,9 +112,6 @@ class TestAuthenticated(unittest.TestCase):
         self.assertIsInstance(game, dict)
 
     def test_pvp_game_workaround(self):
-        if not self.api_key:
-            self.skipTest("No authorization token found")
-
         # https://api.guildwars2.com/v2/pvp/games/xyz is 404, but
         # https://api.guildwars2.com/v2/pvp/games?id=xyz works
         endpoint = gw2api.v2.AuthenticatedEndpoint("pvp/games")
@@ -138,66 +120,3 @@ class TestAuthenticated(unittest.TestCase):
         with self.assertRaises(requests.HTTPError) as context:
             endpoint.get_one(games[0])
         self.assertEqual(context.exception.response.status_code, 404)
-
-    guild_id = None
-
-    def get_guild_id(self):
-        gw2api.v2.account.set_token(self.api_key)
-        gw2api.v2.guild.set_token(self.api_key)
-
-        if self.guild_id is None:
-            # Try to find a guild that we can access with the API key we have.
-            account = gw2api.v2.account.get()
-            for guild_id in account["guilds"]:
-                try:
-                    gw2api.v2.guild.get_members(guild_id)
-                    self.guild_id = guild_id
-                    break
-                except requests.RequestException:
-                    pass
-            else:
-                self.guild_id = ""
-
-        return self.guild_id
-
-    def test_guild(self):
-        if not self.api_key:
-            self.skipTest("No authorization token found")
-
-        guild_id = self.get_guild_id()
-        if not guild_id:
-            self.skipTest("No usable guild found")
-
-        ranks = gw2api.v2.guild.get_ranks(guild_id)
-        self.assertIsInstance(ranks, list)
-        rank_names = [rank["id"] for rank in ranks]
-        self.assertIn("Leader", rank_names)
-
-        members = gw2api.v2.guild.get_members(guild_id)
-        self.assertIsInstance(members, list)
-
-        treasury = gw2api.v2.guild.get_treasury(guild_id)
-        self.assertIsInstance(treasury, list)
-
-        upgrades = gw2api.v2.guild.get_upgrades(guild_id)
-        self.assertIsInstance(upgrades, list)
-        for upgrade_id in upgrades:
-            self.assertIsInstance(upgrade_id, int)
-
-    def test_guild_stash(self):
-        if not self.api_key:
-            self.skipTest("No authorization token found")
-
-        guild_id = self.get_guild_id()
-        if not guild_id:
-            self.skipTest("No usable guild found")
-
-        stash = gw2api.v2.guild.get_stash(guild_id)
-        self.assertIsInstance(stash, list)
-
-        for first_tab in stash:
-            self.assertIsInstance(first_tab, dict)
-            self.assertIn("upgrade_id", first_tab)
-            self.assertIn("size", first_tab)
-            self.assertIn("coins", first_tab)
-            self.assertIn("inventory", first_tab)
