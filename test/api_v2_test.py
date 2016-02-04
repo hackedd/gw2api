@@ -181,8 +181,9 @@ class TestApi2(unittest.TestCase):
 
         daily_achievements = gw2api.v2.achievements.get("daily")
         self.assertIsInstance(daily_achievements, dict)
-        self.assertEqual(["pve", "pvp", "wvw"],
-                         sorted(daily_achievements.keys()))
+        self.assertIn("pve", daily_achievements)
+        self.assertIn("pvp", daily_achievements)
+        self.assertIn("wvw", daily_achievements)
 
     def test_achievement_groups(self):
         story_group_id = "A4ED8379-5B6B-4ECC-B6E1-70C350C902D2"
