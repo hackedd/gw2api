@@ -65,3 +65,11 @@ class TestGuildAuthenticated(TestAuthenticated):
             self.assertIn("size", first_tab)
             self.assertIn("coins", first_tab)
             self.assertIn("inventory", first_tab)
+
+    def test_guild_log(self):
+        log = gw2api.v2.guild.get_log(self.guild_id)
+        self.assertIsInstance(log, list)
+        for entry in log[:5]:
+            self.assertIsInstance(entry, dict)
+            self.assertIn("id", entry)
+            self.assertIn("type", entry)

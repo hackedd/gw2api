@@ -102,3 +102,7 @@ class GuildEndpoint(AuthenticatedEndpoint):
     def get_upgrades(self, id):
         name = "%s/%s/upgrades" % (self.name, id)
         return self.get_cached(name, None)
+
+    def get_log(self, id):
+        name = "%s/%s/log" % (self.name, id)
+        return self.get_cached(name, None)
