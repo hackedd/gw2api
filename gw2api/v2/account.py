@@ -45,6 +45,9 @@ class AccountEndpoint(AuthenticatedMixin, EndpointBase):
     def get_achievements(self):
         return self.get_cached(self.name + "/achievements", None)
 
+    def get_inventory(self):
+        return self.get_cached(self.name + "/inventory", None)
+
 
 class TokenInfoEndpoint(AuthenticatedMixin, EndpointBase):
     def get(self, token=None):

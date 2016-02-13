@@ -3,10 +3,10 @@ import requests
 import gw2api
 import gw2api.v2
 
-from auth_test import TestAuthenticated
+from auth_test import AuthenticatedTestBase
 
 
-class TestGuildAuthenticated(TestAuthenticated):
+class TestGuildAuthenticated(AuthenticatedTestBase):
     guild_id = None
 
     @classmethod

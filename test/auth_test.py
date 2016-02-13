@@ -6,7 +6,7 @@ import gw2api
 import gw2api.v2
 
 
-class TestAuthenticated(unittest.TestCase):
+class AuthenticatedTestBase(unittest.TestCase):
     token_filename = "api-key.txt"
     api_key = None
 
@@ -20,6 +20,8 @@ class TestAuthenticated(unittest.TestCase):
         if not self.api_key:
             self.skipTest("No authorization token found")
 
+
+class TestAuthenticated(AuthenticatedTestBase):
     def test_account_no_auth(self):
         gw2api.v2.account.set_token(None)
         with self.assertRaises(Exception) as context:
@@ -55,6 +57,9 @@ class TestAuthenticated(unittest.TestCase):
 
         achievements = gw2api.v2.account.get_achievements()
         self.assertIsInstance(achievements, list)
+
+        inventory = gw2api.v2.account.get_inventory()
+        self.assertIsInstance(inventory, list)
 
     def test_token_info(self):
         response = gw2api.v2.token_info.get(self.api_key)
