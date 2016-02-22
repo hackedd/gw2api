@@ -52,6 +52,7 @@ emblem_backgrounds = Endpoint("emblem/backgrounds")
 guild_upgrades = LocaleAwareEndpoint("guild/upgrades")
 guild_permissions = LocaleAwareEndpoint("guild/permissions")
 skills = LocaleAwareEndpoint("skills")
+pvp_seasons = LocaleAwareEndpoint("pvp/seasons")
 
 account = AccountEndpoint("account")
 token_info = TokenInfoEndpoint("tokeninfo")

@@ -227,3 +227,11 @@ class TestApi2(unittest.TestCase):
         admin_permission = gw2api.v2.guild_permissions.get("Admin")
         self.assertEqual("Admin Lower Ranks.", admin_permission["name"])
         self.assertIn("description", admin_permission)
+
+    def test_pvp_seasons(self):
+        season_one_id = "44B85826-B5ED-4890-8C77-82DDF9F2CF2B"
+        self.assertIn(season_one_id, gw2api.v2.pvp_seasons.get_ids())
+
+        season_one = gw2api.v2.pvp_seasons.get(season_one_id)
+        self.assertEqual("PvP League Season One", season_one["name"])
+        self.assertIn("divisions", season_one)
