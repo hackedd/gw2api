@@ -10,7 +10,7 @@ LANGUAGES = {
 }
 
 
-from .endpoint import Endpoint, LocaleAwareEndpoint
+from .endpoint import Endpoint, BuildEndpoint, LocaleAwareEndpoint
 from .recipes import RecipeSearchEndpoint
 from .account import (AuthenticatedEndpoint, AccountEndpoint,
                       TokenInfoEndpoint, CharacterEndpoint,
@@ -19,7 +19,7 @@ from .transactions import TransactionEndpoint
 from .wvw import WvwMatchesEndpoint
 
 
-build = Endpoint("build")
+build = BuildEndpoint("build")
 colors = LocaleAwareEndpoint("colors")
 exchange = Endpoint("commerce/exchange")
 listings = Endpoint("commerce/listings")

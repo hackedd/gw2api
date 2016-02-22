@@ -167,3 +167,9 @@ class LocaleAwareEndpoint(Endpoint):
                       ".page-%(page)d.%(page_size)d.json" % params)
         data = self.get_cached(self.name, cache_name, params=params)
         return ListWrapper(self, page, data, args=(page_size, lang))
+
+
+class BuildEndpoint(EndpointBase):
+    def get(self):
+        build = self.get_cached(self.name, None)
+        return build["id"]

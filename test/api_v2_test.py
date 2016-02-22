@@ -61,6 +61,10 @@ class TestApi2(unittest.TestCase):
         self.assertEqual(page.meta["result_total"], 35)
         self.assertEqual(page.meta["result_count"], 5)
 
+    def test_build(self):
+        build = gw2api.v2.build.get()
+        self.assertIsInstance(build, int)
+
     def test_getting_color_ids(self):
         color_ids = gw2api.v2.colors.get_ids()
         self.assertIsInstance(color_ids, list)
