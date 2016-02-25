@@ -101,3 +101,7 @@ class GuildEndpoint(AuthenticatedEndpoint):
     def get_log(self, id):
         name = "%s/%s/log" % (self.name, id)
         return self.get_cached(name, None)
+
+    def get_teams(self, id):
+        name = "%s/%s/teams" % (self.name, id)
+        return self.get_cached(name, None)

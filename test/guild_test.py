@@ -73,3 +73,12 @@ class TestGuildAuthenticated(AuthenticatedTestBase):
             self.assertIsInstance(entry, dict)
             self.assertIn("id", entry)
             self.assertIn("type", entry)
+
+    def test_guild_teams(self):
+        teams = gw2api.v2.guild.get_teams(self.guild_id)
+        self.assertIsInstance(teams, list)
+        for entry in teams[:5]:
+            self.assertIsInstance(entry, dict)
+            self.assertIn("id", entry)
+            self.assertIn("members", entry)
+            self.assertIn("name", entry)
