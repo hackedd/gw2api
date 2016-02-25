@@ -101,13 +101,14 @@ class TestAuthenticated(AuthenticatedTestBase):
         recipes = gw2api.v2.characters.get_recipes(character_name)
         self.assertIsInstance(recipes, list)
 
-    def test_pvp(self):
+    def test_pvp_stats(self):
         gw2api.v2.pvp_stats.set_token(self.api_key)
 
         pvp_stats = gw2api.v2.pvp_stats.get()
         self.assertIsInstance(pvp_stats, dict)
         self.assertIn("pvp_rank", pvp_stats)
 
+    def test_pvp_games(self):
         gw2api.v2.pvp_games.set_token(self.api_key)
 
         games = gw2api.v2.pvp_games.get_ids()
@@ -115,3 +116,12 @@ class TestAuthenticated(AuthenticatedTestBase):
 
         game = gw2api.v2.pvp_games.get(games[0])
         self.assertIsInstance(game, dict)
+
+    def test_pvp_standings(self):
+        gw2api.v2.pvp_standings.set_token(self.api_key)
+
+        standings = gw2api.v2.pvp_standings.get()
+        self.assertIsInstance(standings, list)
+        self.assertIn("current", standings[0])
+        self.assertIn("best", standings[0])
+        self.assertIn("season_id", standings[0])
