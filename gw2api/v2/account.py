@@ -72,14 +72,6 @@ class CharacterEndpoint(AuthenticatedEndpoint):
         return self.get_cached(name, None).get("recipes")
 
 
-class PvpGamesEndpoint(AuthenticatedEndpoint):
-    def get_one(self, id):
-        # Workaround; https://api.guildwars2.com/v2/pvp/games/xyz gives
-        # a 404 but https://api.guildwars2.com/v2/pvp/games?id=xyz works
-        cache_name = "%s.%s.json" % (self.name, id)
-        return self.get_cached(self.name, cache_name, params={"id": id})
-
-
 class PvpStatsEndpoint(AuthenticatedMixin, EndpointBase):
     def get(self):
         return self.get_cached(self.name, None)
