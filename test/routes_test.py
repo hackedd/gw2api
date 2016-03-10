@@ -9,7 +9,7 @@ def get_prefixed_endpoints(prefix, endpoint):
 
     for name in dir(endpoint):
         if name.startswith("get_"):
-            path = prefix + name[4:]
+            path = prefix + name[4:].replace("_", "/")
             endpoints[path] = endpoint
 
     return endpoints
@@ -25,6 +25,8 @@ def get_endpoints():
 
     endpoints.update(get_prefixed_endpoints("account/",
                                             gw2api.v2.AccountEndpoint))
+    endpoints.update(get_prefixed_endpoints("achievements/",
+                                            gw2api.v2.AchievementEndpoint))
     endpoints.update(get_prefixed_endpoints("characters/:id/",
                                             gw2api.v2.CharacterEndpoint))
     endpoints.update(get_prefixed_endpoints("guild/:id/",

@@ -183,7 +183,14 @@ class TestApi2(unittest.TestCase):
         self.assertIn("name", achievement)
         self.assertIn("requirement", achievement)
 
-        daily_achievements = gw2api.v2.achievements.get("daily")
+    def test_daily_achievements(self):
+        daily_achievements = gw2api.v2.achievements.get_daily()
+        self.assertIsInstance(daily_achievements, dict)
+        self.assertIn("pve", daily_achievements)
+        self.assertIn("pvp", daily_achievements)
+        self.assertIn("wvw", daily_achievements)
+
+        daily_achievements = gw2api.v2.achievements.get_daily_tomorrow()
         self.assertIsInstance(daily_achievements, dict)
         self.assertIn("pve", daily_achievements)
         self.assertIn("pvp", daily_achievements)

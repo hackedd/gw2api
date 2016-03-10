@@ -16,6 +16,7 @@ from .account import (AuthenticatedEndpoint, AccountEndpoint,
                       TokenInfoEndpoint, CharacterEndpoint,
                       PvpStatsEndpoint, GuildEndpoint)
 from .transactions import TransactionEndpoint
+from .achievements import AchievementEndpoint
 from .wvw import WvwMatchesEndpoint
 
 
@@ -43,7 +44,7 @@ wvw_matches = WvwMatchesEndpoint("wvw/matches")
 wvw_objectives = LocaleAwareEndpoint("wvw/objectives")
 materials = LocaleAwareEndpoint("materials")
 currencies = LocaleAwareEndpoint("currencies")
-achievements = LocaleAwareEndpoint("achievements")
+achievements = AchievementEndpoint("achievements")
 achievement_categories = LocaleAwareEndpoint("achievements/categories")
 achievement_groups = LocaleAwareEndpoint("achievements/groups")
 minis = LocaleAwareEndpoint("minis")
