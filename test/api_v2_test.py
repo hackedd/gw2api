@@ -242,3 +242,26 @@ class TestApi2(unittest.TestCase):
         season_one = gw2api.v2.pvp_seasons.get(season_one_id)
         self.assertEqual("PvP League Season One", season_one["name"])
         self.assertIn("divisions", season_one)
+
+    def test_professions(self):
+        expected_professions = [
+            "Guardian",
+            "Warrior",
+            "Engineer",
+            "Ranger",
+            "Thief",
+            "Elementalist",
+            "Mesmer",
+            "Necromancer",
+            "Revenant"
+        ]
+
+        professions = gw2api.v2.professions.get_ids()
+        self.assertEqual(sorted(expected_professions), sorted(professions))
+
+        engineer = gw2api.v2.professions.get("Engineer")
+        self.assertEqual("Engineer", engineer["id"])
+        self.assertEqual("Engineer", engineer["name"])
+        self.assertIn("icon", engineer)
+        self.assertIn("specializations", engineer)
+        self.assertIn("training", engineer)
