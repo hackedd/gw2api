@@ -94,9 +94,6 @@ class TestApi(unittest.TestCase):
         self.assertIn("ingredients", recipe_details)
 
     def test_events(self):
-        event_names = gw2api.event_names()
-        self.assertIsInstance(event_names, dict)
-
         event_id = "5161DE97-FAB6-4916-8788-65E9F4FAF333"
         event_name = "Recover the stolen LUM0009 golems from the Inquest."
 
