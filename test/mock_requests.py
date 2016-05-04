@@ -1,6 +1,7 @@
 import urllib
 import requests
-from StringIO import StringIO
+
+import six
 
 
 class MockSession(object):
@@ -32,12 +33,15 @@ class MockSession(object):
             response.reason = url + " not found"
         else:
             response.status_code = 200
-            response.raw = StringIO(response_data)
+            response.raw = six.BytesIO(response_data)
 
         return response
 
     def add_mock_response(self, method, url, response, params=None):
         url = self.add_params(url, params)
+
+        if isinstance(response, six.text_type):
+            response = response.encode("utf-8")
 
         if method:
             if method not in self.responses:

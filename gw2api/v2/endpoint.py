@@ -75,7 +75,7 @@ class EndpointBase(object):
     def get_metadata(self, r):
         metadata = {}
 
-        for key, link in r.links.iteritems():
+        for key, link in r.links.items():
             metadata[key] = link["url"]
 
         if "x-page-total" in r.headers:

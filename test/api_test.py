@@ -1,6 +1,7 @@
 import unittest
 import warnings
 from datetime import datetime
+import six
 
 import gw2api
 
@@ -13,20 +14,22 @@ class TestApi(unittest.TestCase):
         map_names = gw2api.continents()
         self.assertIsInstance(map_names, dict)
         keys = ["continent_dims", "floors", "max_zoom", "min_zoom", "name"]
-        for continent_id, continent in map_names.iteritems():
+        for continent_id, continent in map_names.items():
             self.assertEqual(sorted(continent.keys()), keys)
 
         map_names = gw2api.map_names()
         self.assertIsInstance(map_names, dict)
-        key, value = map_names.items()[0]
-        self.assertIsInstance(key, basestring)
-        self.assertIsInstance(value, basestring)
+        for key, value in map_names.items():
+            self.assertIsInstance(key, six.string_types)
+            self.assertIsInstance(value, six.string_types)
+            break
 
         maps = gw2api.maps()
         self.assertIsInstance(maps, dict)
-        key, value = maps.items()[0]
-        self.assertIsInstance(key, basestring)
-        self.assertIsInstance(value, dict)
+        for key, value in maps.items():
+            self.assertIsInstance(key, six.string_types)
+            self.assertIsInstance(value, dict)
+            break
 
         map_data = gw2api.maps(map_id=50)
         self.assertIsInstance(map_data, dict)
@@ -58,10 +61,11 @@ class TestApi(unittest.TestCase):
 
         files = gw2api.files()
         self.assertIsInstance(files, dict)
-        key, black = files.items()[0]
-        self.assertIsInstance(key, basestring)
-        self.assertIsInstance(black, dict)
-        self.assertEqual(sorted(black.keys()), ["file_id", "signature"])
+        for key, value in files.items():
+            self.assertIsInstance(key, six.string_types)
+            self.assertIsInstance(value, dict)
+            self.assertEqual(sorted(value.keys()), ["file_id", "signature"])
+            break
 
     def test_skins(self):
         skins = gw2api.skins()

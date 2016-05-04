@@ -77,9 +77,7 @@ def encode_coin_link(copper, silver=0, gold=0):
 
 
 def encode_chat_link(link_type, **kwargs):
-    if isinstance(link_type, basestring):
-        if link_type not in gw2api.LINK_TYPES:
-            raise Exception("Unknown link type '%s'" % link_type)
+    if link_type in gw2api.LINK_TYPES:
         link_type = gw2api.LINK_TYPES[link_type]
 
     if link_type == gw2api.TYPE_COIN:
@@ -109,10 +107,13 @@ def encode_chat_link(link_type, **kwargs):
                        gw2api.TYPE_SKIN, gw2api.TYPE_OUTFIT):
         data = pack("<BI", link_type, kwargs["id"])
 
-    else:
+    elif isinstance(link_type, int):
         raise Exception("Unknown link type 0x%02x" % link_type)
 
-    return "[&%s]" % b64encode(data)
+    else:
+        raise Exception("Unknown link type '%s'" % link_type)
+
+    return "[&%s]" % b64encode(data).decode("ascii")
 
 
 def decode_chat_link(string):
@@ -120,7 +121,7 @@ def decode_chat_link(string):
         string = string[2:-1]
     data = b64decode(string)
 
-    link_type, = unpack("<B", data[0])
+    link_type, = unpack("<B", data[:1])
 
     if link_type == gw2api.TYPE_COIN:
         amount, = unpack("<I", data[1:])
@@ -144,7 +145,7 @@ def decode_chat_link(string):
         return "item", values
 
     link_type_string = None
-    for key, value in gw2api.LINK_TYPES.iteritems():
+    for key, value in gw2api.LINK_TYPES.items():
         if value == link_type:
             link_type_string = key
 

@@ -1,4 +1,7 @@
 from ctypes import *
+
+import six
+
 from .map import maps
 
 
@@ -42,8 +45,8 @@ class FileMapping(object):
     def __init__(self, name, value_struct, create=True):
         super(FileMapping, self).__init__()
 
-        if not isinstance(name, unicode):
-            name = unicode(name)
+        if not isinstance(name, six.text_type):
+            name = six.text_type(name)
 
         size = sizeof(value_struct)
         pointer_type = POINTER(value_struct)

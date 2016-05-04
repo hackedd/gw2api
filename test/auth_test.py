@@ -1,6 +1,6 @@
 import os
 import unittest
-import requests
+import six
 
 import gw2api
 import gw2api.v2
@@ -80,7 +80,7 @@ class TestAuthenticated(AuthenticatedTestBase):
 
         character_names = gw2api.v2.characters.get_ids()
         self.assertIsInstance(character_names, list)
-        self.assertIsInstance(character_names[0], basestring)
+        self.assertIsInstance(character_names[0], six.string_types)
 
         character_name = character_names[0]
 
