@@ -56,6 +56,8 @@ skills = LocaleAwareEndpoint("skills")
 pvp_seasons = LocaleAwareEndpoint("pvp/seasons")
 pvp_amulets = LocaleAwareEndpoint("pvp/amulets")
 professions = LocaleAwareEndpoint("professions")
+legends = Endpoint("legends")
+pets = LocaleAwareEndpoint("pets")
 
 account = AccountEndpoint("account")
 token_info = TokenInfoEndpoint("tokeninfo")

@@ -274,3 +274,24 @@ class TestApi2(unittest.TestCase):
         self.assertIn("icon", engineer)
         self.assertIn("specializations", engineer)
         self.assertIn("training", engineer)
+
+    def test_legends(self):
+        legend_ids = gw2api.v2.legends.get_ids()
+        self.assertIsInstance(legend_ids, list)
+
+        legend = gw2api.v2.legends.get(legend_ids[0])
+        self.assertIsInstance(legend, dict)
+        self.assertIn("swap", legend)
+        self.assertIn("heal", legend)
+        self.assertIn("elite", legend)
+        self.assertIn("utilities", legend)
+
+    def test_pets(self):
+        pet_ids = gw2api.v2.pets.get_ids()
+        self.assertIsInstance(pet_ids, list)
+
+        pet = gw2api.v2.pets.get(pet_ids[0])
+        self.assertIsInstance(pet, dict)
+        self.assertIn("name", pet)
+        self.assertIn("description", pet)
+        self.assertIn("icon", pet)
