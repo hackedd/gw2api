@@ -1,5 +1,4 @@
 import unittest
-import requests
 
 import gw2api.v2
 
@@ -242,6 +241,16 @@ class TestApi2(unittest.TestCase):
         season_one = gw2api.v2.pvp_seasons.get(season_one_id)
         self.assertEqual("PvP League Season One", season_one["name"])
         self.assertIn("divisions", season_one)
+
+    def test_pvp_amulets(self):
+        amulet_ids = gw2api.v2.pvp_amulets.get_ids()
+        self.assertIsInstance(amulet_ids, list)
+
+        amulet = gw2api.v2.pvp_amulets.get(amulet_ids[0])
+        self.assertIsInstance(amulet, dict)
+        self.assertIn("name", amulet)
+        self.assertIn("icon", amulet)
+        self.assertIn("attributes", amulet)
 
     def test_professions(self):
         expected_professions = [

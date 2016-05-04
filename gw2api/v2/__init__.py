@@ -54,6 +54,7 @@ guild_upgrades = LocaleAwareEndpoint("guild/upgrades")
 guild_permissions = LocaleAwareEndpoint("guild/permissions")
 skills = LocaleAwareEndpoint("skills")
 pvp_seasons = LocaleAwareEndpoint("pvp/seasons")
+pvp_amulets = LocaleAwareEndpoint("pvp/amulets")
 professions = LocaleAwareEndpoint("professions")
 
 account = AccountEndpoint("account")
