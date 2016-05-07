@@ -119,7 +119,8 @@ def encode_chat_link(link_type, **kwargs):
 def decode_chat_link(string):
     if string.startswith("[&") and string.endswith("]"):
         string = string[2:-1]
-    data = b64decode(string)
+
+    data = b64decode(string.encode("ascii"))
 
     link_type, = unpack("<B", data[:1])
 
