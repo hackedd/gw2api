@@ -58,6 +58,7 @@ pvp_amulets = LocaleAwareEndpoint("pvp/amulets")
 professions = LocaleAwareEndpoint("professions")
 legends = Endpoint("legends")
 pets = LocaleAwareEndpoint("pets")
+item_stats = LocaleAwareEndpoint("itemstats")
 
 account = AccountEndpoint("account")
 token_info = TokenInfoEndpoint("tokeninfo")

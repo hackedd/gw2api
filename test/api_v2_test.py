@@ -295,3 +295,16 @@ class TestApi2(unittest.TestCase):
         self.assertIn("name", pet)
         self.assertIn("description", pet)
         self.assertIn("icon", pet)
+
+    def test_item_stats(self):
+        item_stats_ids = gw2api.v2.item_stats.get_ids()
+        self.assertIsInstance(item_stats_ids, list)
+
+        item_stats = gw2api.v2.item_stats.get(item_stats_ids[0])
+        self.assertIsInstance(item_stats, dict)
+        self.assertIn("name", item_stats)
+        self.assertIn("attributes", item_stats)
+
+        berserker = gw2api.v2.item_stats.get(161)
+        self.assertEqual(set(berserker["attributes"].keys()),
+                         {"Power", "Precision", "CritDamage"})
