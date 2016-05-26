@@ -91,6 +91,13 @@ class TestAuthenticated(AuthenticatedTestBase):
         self.assertIsInstance(character, dict)
         self.assertEqual(character["name"], character_name)
 
+        core = gw2api.v2.characters.get_core(character_name)
+        self.assertIsInstance(core, dict)
+        self.assertEqual(core["name"], character_name)
+
+        crafting = gw2api.v2.characters.get_crafting(character_name)
+        self.assertIsInstance(crafting, list)
+
         inventory = gw2api.v2.characters.get_inventory(character_name)
         self.assertIsInstance(inventory, list)
 

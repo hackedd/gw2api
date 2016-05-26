@@ -58,6 +58,14 @@ class TokenInfoEndpoint(AuthenticatedMixin, EndpointBase):
 
 
 class CharacterEndpoint(AuthenticatedEndpoint):
+    def get_core(self, id):
+        name = "%s/%s/core" % (self.name, id)
+        return self.get_cached(name, None)
+
+    def get_crafting(self, id):
+        name = "%s/%s/crafting" % (self.name, id)
+        return self.get_cached(name, None).get("crafting")
+
     def get_inventory(self, id):
         name = "%s/%s/inventory" % (self.name, id)
         return self.get_cached(name, None).get("bags")
