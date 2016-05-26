@@ -48,6 +48,9 @@ class AccountEndpoint(AuthenticatedMixin, EndpointBase):
     def get_inventory(self):
         return self.get_cached(self.name + "/inventory", None)
 
+    def get_titles(self):
+        return self.get_cached(self.name + "/titles", None)
+
 
 class TokenInfoEndpoint(AuthenticatedMixin, EndpointBase):
     def get(self, token=None):

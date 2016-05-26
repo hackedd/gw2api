@@ -308,3 +308,12 @@ class TestApi2(unittest.TestCase):
         berserker = gw2api.v2.item_stats.get(161)
         self.assertEqual(set(berserker["attributes"].keys()),
                          {"Power", "Precision", "CritDamage"})
+
+    def test_titles(self):
+        title_ids = gw2api.v2.titles.get_ids()
+        self.assertIsInstance(title_ids, list)
+
+        title = gw2api.v2.titles.get(title_ids[0])
+        self.assertIsInstance(title, dict)
+        self.assertIn("name", title)
+        self.assertIn("achievement", title)

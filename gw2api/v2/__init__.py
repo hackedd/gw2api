@@ -59,6 +59,7 @@ professions = LocaleAwareEndpoint("professions")
 legends = Endpoint("legends")
 pets = LocaleAwareEndpoint("pets")
 item_stats = LocaleAwareEndpoint("itemstats")
+titles = LocaleAwareEndpoint("titles")
 
 account = AccountEndpoint("account")
 token_info = TokenInfoEndpoint("tokeninfo")
