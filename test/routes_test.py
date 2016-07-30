@@ -48,7 +48,8 @@ def check_endpoint(endpoint, route):
 
 def test_endpoints():
     ignored_endpoints = ["emblem", "pvp", "traits-beta", "pvp/games/:id",
-                         "pvp/seasons/:id", "pvp/standings/:id"]
+                         "pvp/seasons/:id", "pvp/standings/:id", "guild/:id",
+                         "guild/search"]
     endpoints = get_endpoints()
 
     v2 = requests.get("https://api.guildwars2.com/v2.json").json()

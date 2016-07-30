@@ -234,6 +234,19 @@ class TestApi2(unittest.TestCase):
         self.assertEqual("Admin Lower Ranks.", admin_permission["name"])
         self.assertIn("description", admin_permission)
 
+    def test_guild(self):
+        arenanet_id = "4BBB52AA-D768-4FC6-8EDE-C299F2822F0F"
+        guild = gw2api.v2.guild.get(arenanet_id)
+        self.assertIsInstance(guild, dict)
+        self.assertEqual("ArenaNet", guild["name"])
+        self.assertIn("emblem", guild)
+
+    def test_guild_search(self):
+        arenanet_id = "4BBB52AA-D768-4FC6-8EDE-C299F2822F0F"
+        search_results = gw2api.v2.guild.search("arenanet")
+        self.assertIsInstance(search_results, list)
+        self.assertIn(arenanet_id, search_results)
+
     def test_pvp_seasons(self):
         season_one_id = "44B85826-B5ED-4890-8C77-82DDF9F2CF2B"
         self.assertIn(season_one_id, gw2api.v2.pvp_seasons.get_ids())

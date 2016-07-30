@@ -137,3 +137,7 @@ class GuildEndpoint(AuthenticatedEndpoint):
     def get_teams(self, id):
         name = "%s/%s/teams" % (self.name, id)
         return self.get_cached(name, None)
+
+    def search(self, name):
+        return self.get_cached(self.name + "/search", None,
+                               params={"name": name})
