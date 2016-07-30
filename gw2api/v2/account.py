@@ -60,6 +60,9 @@ class AccountEndpoint(AuthenticatedMixin, EndpointBase):
     def get_outfits(self):
         return self.get_cached(self.name + "/outfits", None)
 
+    def get_recipes(self):
+        return self.get_cached(self.name + "/recipes", None)
+
 
 class TokenInfoEndpoint(AuthenticatedMixin, EndpointBase):
     def get(self, token=None):

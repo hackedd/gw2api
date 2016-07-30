@@ -73,6 +73,9 @@ class TestAuthenticated(AuthenticatedTestBase):
         outfits = gw2api.v2.account.get_outfits()
         self.assertIsInstance(outfits, list)
 
+        recipes = gw2api.v2.account.get_recipes()
+        self.assertIsInstance(recipes, list)
+
     def test_token_info(self):
         response = gw2api.v2.token_info.get(self.api_key)
         self.assertTrue(self.api_key.startswith(response["id"]))
