@@ -64,6 +64,15 @@ class TestAuthenticated(AuthenticatedTestBase):
         titles = gw2api.v2.account.get_titles()
         self.assertIsInstance(titles, list)
 
+        finishers = gw2api.v2.account.get_finishers()
+        self.assertIsInstance(finishers, list)
+
+        masteries = gw2api.v2.account.get_masteries()
+        self.assertIsInstance(masteries, list)
+
+        outfits = gw2api.v2.account.get_outfits()
+        self.assertIsInstance(outfits, list)
+
     def test_token_info(self):
         response = gw2api.v2.token_info.get(self.api_key)
         self.assertTrue(self.api_key.startswith(response["id"]))

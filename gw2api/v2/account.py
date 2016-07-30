@@ -51,6 +51,15 @@ class AccountEndpoint(AuthenticatedMixin, EndpointBase):
     def get_titles(self):
         return self.get_cached(self.name + "/titles", None)
 
+    def get_finishers(self):
+        return self.get_cached(self.name + "/finishers", None)
+
+    def get_masteries(self):
+        return self.get_cached(self.name + "/masteries", None)
+
+    def get_outfits(self):
+        return self.get_cached(self.name + "/outfits", None)
+
 
 class TokenInfoEndpoint(AuthenticatedMixin, EndpointBase):
     def get(self, token=None):
