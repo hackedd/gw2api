@@ -91,6 +91,18 @@ class CharacterEndpoint(AuthenticatedEndpoint):
         name = "%s/%s/recipes" % (self.name, id)
         return self.get_cached(name, None).get("recipes")
 
+    def get_backstory(self, id):
+        name = "%s/%s/backstory" % (self.name, id)
+        return self.get_cached(name, None).get("backstory")
+
+    def get_heropoints(self, id):
+        name = "%s/%s/heropoints" % (self.name, id)
+        return self.get_cached(name, None)
+
+    def get_training(self, id):
+        name = "%s/%s/training" % (self.name, id)
+        return self.get_cached(name, None).get("training")
+
 
 class PvpStatsEndpoint(AuthenticatedMixin, EndpointBase):
     def get(self):

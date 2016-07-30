@@ -120,6 +120,15 @@ class TestAuthenticated(AuthenticatedTestBase):
         recipes = gw2api.v2.characters.get_recipes(character_name)
         self.assertIsInstance(recipes, list)
 
+        backstory = gw2api.v2.characters.get_backstory(character_name)
+        self.assertIsInstance(backstory, list)
+
+        heropoints = gw2api.v2.characters.get_heropoints(character_name)
+        self.assertIsInstance(heropoints, list)
+
+        training = gw2api.v2.characters.get_training(character_name)
+        self.assertIsInstance(training, list)
+
     def test_pvp_stats(self):
         gw2api.v2.pvp_stats.set_token(self.api_key)
 
