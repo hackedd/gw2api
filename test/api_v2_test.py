@@ -173,6 +173,13 @@ class TestApi2(unittest.TestCase):
         self.assertIn("start_time", match)
         self.assertIn("end_time", match)
 
+    def test_wvw_abilities(self):
+        ids = gw2api.v2.wvw_abilities.get_ids()
+        self.assertIsInstance(ids, list)
+
+        details = gw2api.v2.wvw_abilities.get(ids[0])
+        self.assertIsInstance(details, dict)
+
     def test_achievements(self):
         achievement_ids = gw2api.v2.achievements.get_ids()
         self.assertIsInstance(achievement_ids, list)
@@ -330,3 +337,43 @@ class TestApi2(unittest.TestCase):
         self.assertIsInstance(title, dict)
         self.assertIn("name", title)
         self.assertIn("achievement", title)
+
+    def test_backstory(self):
+        question_ids = gw2api.v2.backstory_questions.get_ids()
+        self.assertIsInstance(question_ids, list)
+
+        question = gw2api.v2.backstory_questions.get(question_ids[0])
+        self.assertIsInstance(question, dict)
+
+        answers = gw2api.v2.backstory_answers.get(question["answers"])
+        self.assertIsInstance(answers, list)
+        for answer in answers:
+            self.assertIsInstance(answer, dict)
+
+    def test_finishers(self):
+        ids = gw2api.v2.finishers.get_ids()
+        self.assertIsInstance(ids, list)
+
+        details = gw2api.v2.finishers.get(ids[0])
+        self.assertIsInstance(details, dict)
+
+    def test_masteries(self):
+        ids = gw2api.v2.masteries.get_ids()
+        self.assertIsInstance(ids, list)
+
+        details = gw2api.v2.masteries.get(ids[0])
+        self.assertIsInstance(details, dict)
+
+    def test_stories(self):
+        ids = gw2api.v2.stories.get_ids()
+        self.assertIsInstance(ids, list)
+
+        details = gw2api.v2.stories.get(ids[0])
+        self.assertIsInstance(details, dict)
+
+    def test_story_seasons(self):
+        ids = gw2api.v2.story_seasons.get_ids()
+        self.assertIsInstance(ids, list)
+
+        details = gw2api.v2.story_seasons.get(ids[0])
+        self.assertIsInstance(details, dict)
