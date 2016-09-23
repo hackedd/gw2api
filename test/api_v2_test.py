@@ -377,3 +377,10 @@ class TestApi2(unittest.TestCase):
 
         details = gw2api.v2.story_seasons.get(ids[0])
         self.assertIsInstance(details, dict)
+
+    def test_outfits(self):
+        ids = gw2api.v2.outfits.get_ids()
+        self.assertIsInstance(ids, list)
+
+        details = gw2api.v2.outfits.get(ids[0])
+        self.assertIsInstance(details, dict)

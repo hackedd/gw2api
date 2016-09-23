@@ -67,6 +67,7 @@ finishers = LocaleAwareEndpoint("finishers")
 masteries = LocaleAwareEndpoint("masteries")
 stories = LocaleAwareEndpoint("stories")
 story_seasons = LocaleAwareEndpoint("stories/seasons")
+outfits = LocaleAwareEndpoint("outfits")
 
 account = AccountEndpoint("account")
 token_info = TokenInfoEndpoint("tokeninfo")
