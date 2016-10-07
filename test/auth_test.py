@@ -132,6 +132,10 @@ class TestAuthenticated(AuthenticatedTestBase):
         training = gw2api.v2.characters.get_training(character_name)
         self.assertIsInstance(training, list)
 
+        skills = gw2api.v2.characters.get_skills(character_name)
+        self.assertIsInstance(skills, dict)
+        self.assertEqual(sorted(skills.keys()), ["pve", "pvp", "wvw"])
+
     def test_pvp_stats(self):
         gw2api.v2.pvp_stats.set_token(self.api_key)
 
