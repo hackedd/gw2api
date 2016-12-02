@@ -87,6 +87,10 @@ class TestApi2(unittest.TestCase):
         self.assertEqual(["Dye Remover", "Black", "Chalk"],
                          [c["name"] for c in colors2])
 
+        colors2 = gw2api.v2.colors.get(range(1, 4))
+        self.assertEqual(["Dye Remover", "Black", "Chalk"],
+                         [c["name"] for c in colors2])
+
         colors_fr = gw2api.v2.colors.get(1, 2, 3, lang="fr")
         self.assertEqual(["Dissolvant pour teinture", "Noir", "Craie"],
                          [c["name"] for c in colors_fr])

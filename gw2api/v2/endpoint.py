@@ -1,6 +1,9 @@
 import os
 import time
 import json
+import collections
+
+import six
 
 import gw2api
 from .util import ListWrapper
@@ -104,10 +107,11 @@ class Endpoint(EndpointBase):
 
     def get(self, *args):
         if len(args) == 1:
-            if isinstance(args[0], (list, tuple)):
-                args = args[0]
-            else:
+            if (isinstance(args[0], six.string_types) or
+                    not isinstance(args[0], collections.Iterable)):
                 return self.get_one(args[0])
+
+            args = args[0]
 
         params = {"ids": ",".join(map(str, args))}
         cache_name = self.name + ".%(ids)s.json" % params
@@ -141,10 +145,11 @@ class LocaleAwareEndpoint(Endpoint):
         lang = kwargs.get("lang") or self.default_language
 
         if len(args) == 1:
-            if isinstance(args[0], (list, tuple)):
-                args = args[0]
-            else:
+            if (isinstance(args[0], six.string_types) or
+                    not isinstance(args[0], collections.Iterable)):
                 return self.get_one(args[0], lang)
+
+            args = args[0]
 
         params = {"ids": ",".join(map(str, args)), "lang": lang}
         cache_name = self.name + ".%(lang)s.%(ids)s.json" % params
