@@ -180,6 +180,15 @@ class TestApi2(unittest.TestCase):
         details = gw2api.v2.wvw_abilities.get(ids[0])
         self.assertIsInstance(details, dict)
 
+    def test_wvw_ranks(self):
+        ids = gw2api.v2.wvw_ranks.get_ids()
+        self.assertIsInstance(ids, list)
+
+        details = gw2api.v2.wvw_ranks.get(ids[0])
+        self.assertIsInstance(details, dict)
+        self.assertIn("title", details)
+        self.assertIn("min_rank", details)
+
     def test_achievements(self):
         achievement_ids = gw2api.v2.achievements.get_ids()
         self.assertIsInstance(achievement_ids, list)
@@ -271,6 +280,19 @@ class TestApi2(unittest.TestCase):
         self.assertIn("name", amulet)
         self.assertIn("icon", amulet)
         self.assertIn("attributes", amulet)
+
+    def test_pvp_ranks(self):
+        rank_ids = gw2api.v2.pvp_ranks.get_ids()
+        self.assertIsInstance(rank_ids, list)
+
+        rank = gw2api.v2.pvp_ranks.get(rank_ids[0])
+        self.assertIsInstance(rank, dict)
+        self.assertIn("name", rank)
+        self.assertIn("icon", rank)
+        self.assertIn("min_rank", rank)
+        self.assertIn("max_rank", rank)
+        self.assertIn("levels", rank)
+        self.assertIn("finisher_id", rank)
 
     def test_professions(self):
         expected_professions = [
