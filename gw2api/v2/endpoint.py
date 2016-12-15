@@ -98,6 +98,8 @@ class EndpointBase(object):
 
 
 class Endpoint(EndpointBase):
+    default_page_size = 20
+
     def get_ids(self):
         return self.get_cached(self.name, self.name + ".json")
 
@@ -123,7 +125,9 @@ class Endpoint(EndpointBase):
         cache_name = "%s.%s.json" % (self.name, id)
         return self.get_cached(name, cache_name)
 
-    def page(self, page=0, page_size=20):
+    def page(self, page=0, page_size=None):
+        if not page_size:
+            page_size = self.default_page_size
         params = {"page": page, "page_size": page_size}
         cache_name = self.name + ".page-%(page)d.%(page_size)d.json" % params
         data = self.get_cached(self.name, cache_name, params=params)
@@ -163,7 +167,9 @@ class LocaleAwareEndpoint(Endpoint):
         cache_name = "%s.%s.%s.json" % (self.name, lang, id)
         return self.get_cached(name, cache_name, params={"lang": lang})
 
-    def page(self, page=0, page_size=20, lang=None):
+    def page(self, page=0, page_size=None, lang=None):
+        if not page_size:
+            page_size = self.default_page_size
         if lang is None:
             lang = self.default_language
 

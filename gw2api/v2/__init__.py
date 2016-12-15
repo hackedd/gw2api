@@ -18,6 +18,7 @@ from .account import (AuthenticatedEndpoint, AccountEndpoint,
 from .transactions import TransactionEndpoint
 from .achievements import AchievementEndpoint
 from .wvw import WvwMatchesEndpoint
+from .pvp import PvpSeasonEndpoint
 
 
 build = BuildEndpoint("build")
@@ -55,7 +56,7 @@ emblem_backgrounds = Endpoint("emblem/backgrounds")
 guild_upgrades = LocaleAwareEndpoint("guild/upgrades")
 guild_permissions = LocaleAwareEndpoint("guild/permissions")
 skills = LocaleAwareEndpoint("skills")
-pvp_seasons = LocaleAwareEndpoint("pvp/seasons")
+pvp_seasons = PvpSeasonEndpoint("pvp/seasons")
 pvp_amulets = LocaleAwareEndpoint("pvp/amulets")
 pvp_ranks = LocaleAwareEndpoint("pvp/ranks")
 professions = LocaleAwareEndpoint("professions")

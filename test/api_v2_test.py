@@ -275,6 +275,28 @@ class TestApi2(unittest.TestCase):
         self.assertEqual("PvP League Season One", season_one["name"])
         self.assertIn("divisions", season_one)
 
+    def test_pvp_season_leaderboards(self):
+        season_five_id = "A54849B7-7DBD-4958-91EF-72E18CD659BA"
+        self.assertIn(season_five_id, gw2api.v2.pvp_seasons.get_ids())
+
+        leaderboards = gw2api.v2.pvp_seasons.get_leaderboards(season_five_id)
+        self.assertIn("ladder", leaderboards)
+
+        leaderboard = gw2api.v2.pvp_seasons.get_leaderboard(season_five_id,
+                                                            "ladder")
+        self.assertIsInstance(leaderboard, list)
+        first = leaderboard[0]
+        self.assertIsInstance(first, dict)
+        self.assertEqual(first["rank"], 1)
+        self.assertIn("name", first)
+        self.assertIn("date", first)
+        self.assertIn("scores", first)
+
+        second_page = leaderboard.next_page()
+        self.assertIsInstance(second_page, list)
+        self.assertGreaterEqual(second_page[0]["rank"],
+                                leaderboard[-1]["rank"])
+
     def test_pvp_amulets(self):
         amulet_ids = gw2api.v2.pvp_amulets.get_ids()
         self.assertIsInstance(amulet_ids, list)
