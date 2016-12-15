@@ -2,6 +2,7 @@ import requests
 
 import gw2api.v2
 from gw2api.v2.endpoint import EndpointBase, LocaleAwareEndpoint
+from gw2api.v2.account import AuthenticatedMixin
 
 
 def get_prefixed_endpoints(prefix, endpoint):
@@ -10,7 +11,7 @@ def get_prefixed_endpoints(prefix, endpoint):
     for name in dir(endpoint):
         if name.startswith("get_"):
             path = prefix + name[4:].replace("_", "/")
-            endpoints[path] = endpoint
+            endpoints[path] = getattr(endpoint, name)
 
     return endpoints
 
@@ -24,19 +25,24 @@ def get_endpoints():
             endpoints[value.name] = value
 
     endpoints.update(get_prefixed_endpoints("account/",
-                                            gw2api.v2.AccountEndpoint))
+                                            gw2api.v2.account))
     endpoints.update(get_prefixed_endpoints("achievements/",
-                                            gw2api.v2.AchievementEndpoint))
+                                            gw2api.v2.achievements))
     endpoints.update(get_prefixed_endpoints("characters/:id/",
-                                            gw2api.v2.CharacterEndpoint))
+                                            gw2api.v2.characters))
     endpoints.update(get_prefixed_endpoints("guild/:id/",
-                                            gw2api.v2.GuildEndpoint))
+                                            gw2api.v2.guild))
+    endpoints.update(get_prefixed_endpoints("pvp/seasons/:id/",
+                                            gw2api.v2.pvp_seasons))
 
     return endpoints
 
 
 def check_endpoint(endpoint, route):
     assert endpoint is not None, "no endpoint for %s" % route["path"]
+
+    if not isinstance(endpoint, EndpointBase):
+        return
 
     if route["lang"]:
         msg = "endpoint for %s is not locale aware" % route["path"]
@@ -45,11 +51,19 @@ def check_endpoint(endpoint, route):
         msg = "endpoint for %s should not be locale aware" % route["path"]
         assert not isinstance(endpoint, LocaleAwareEndpoint), msg
 
+    if route["auth"]:
+        msg = "endpoint for %s is not authenticated" % route["path"]
+        assert isinstance(endpoint, AuthenticatedMixin), msg
+    else:
+        msg = "endpoint for %s should not be authenticated" % route["path"]
+        assert not isinstance(endpoint, AuthenticatedMixin), msg
+
 
 def test_endpoints():
     ignored_endpoints = ["emblem", "pvp", "traits-beta", "pvp/games/:id",
                          "pvp/seasons/:id", "pvp/standings/:id", "guild/:id",
-                         "guild/search"]
+                         "guild/search",
+                         "pvp/seasons/:id/leaderboards/:board"]
     endpoints = get_endpoints()
 
     v2 = requests.get("https://api.guildwars2.com/v2.json").json()
