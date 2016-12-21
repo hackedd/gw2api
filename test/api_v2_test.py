@@ -373,9 +373,11 @@ class TestApi2(unittest.TestCase):
         self.assertIn("name", item_stats)
         self.assertIn("attributes", item_stats)
 
+        # Ordering of the keys is important for this endpoint, because they
+        # are returned in the order they are displayed in the game.
         berserker = gw2api.v2.item_stats.get(161)
-        self.assertEqual(set(berserker["attributes"].keys()),
-                         {"Power", "Precision", "CritDamage"})
+        self.assertEqual(list(berserker["attributes"].keys()),
+                         ["Power", "Precision", "CritDamage"])
 
     def test_titles(self):
         title_ids = gw2api.v2.titles.get_ids()

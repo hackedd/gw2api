@@ -3,6 +3,7 @@ import time
 import json
 from struct import pack, unpack
 from base64 import b64encode, b64decode
+from collections import OrderedDict
 
 import gw2api
 
@@ -30,7 +31,7 @@ def get_cached(path, cache_name=None, **kwargs):
         cache_file = os.path.join(gw2api.cache_dir, cache_name)
         if mtime(cache_file) >= time.time() - gw2api.cache_time:
             with open(cache_file, "r") as fp:
-                return json.load(fp)
+                return json.load(fp, object_pairs_hook=OrderedDict)
     else:
         cache_file = None
 
@@ -38,7 +39,7 @@ def get_cached(path, cache_name=None, **kwargs):
 
     if not r.ok:
         try:
-            response = r.json()
+            response = r.json(object_pairs_hook=OrderedDict)
         except ValueError:  # pragma: no cover
             response = None
         if isinstance(response, dict) and "text" in response:
