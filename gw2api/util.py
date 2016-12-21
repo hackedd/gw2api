@@ -107,6 +107,10 @@ def encode_chat_link(link_type, **kwargs):
                        gw2api.TYPE_SKIN, gw2api.TYPE_OUTFIT):
         data = pack("<BI", link_type, kwargs["id"])
 
+    elif link_type == gw2api.TYPE_OBJECTIVE:
+        data = pack("<BII", link_type,
+                    kwargs["objective_id"], kwargs["map_id"])
+
     elif isinstance(link_type, int):
         raise Exception("Unknown link type 0x%02x" % link_type)
 
@@ -155,5 +159,10 @@ def decode_chat_link(string):
                      gw2api.TYPE_SKIN, gw2api.TYPE_OUTFIT):
         id, = unpack("<I", data[1:])
         return link_type_string, {"id": id}
+
+    if link_type == gw2api.TYPE_OBJECTIVE:
+        objective_id, map_id = unpack("<II", data[1:])
+        return link_type_string, {"objective_id": objective_id,
+                                  "map_id": map_id}
 
     raise Exception("Unknown link type 0x%02x" % link_type)

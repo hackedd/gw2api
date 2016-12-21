@@ -109,6 +109,16 @@ class TestUtil(unittest.TestCase):
         self.assertEqual(gw2api.encode_chat_link("outfit", id=4),
                          "[&CwQAAAA=]")
 
+        # Y'lan Academy
+        objective = gw2api.encode_chat_link("objective",
+                                            objective_id=102, map_id=1102)
+        self.assertEqual(objective, "[&DGYAAABOBAAA]")
+
+        # Temple of Lost Prayers
+        objective = gw2api.encode_chat_link("objective",
+                                            objective_id=62, map_id=96)
+        self.assertEqual(objective, "[&DD4AAABgAAAA]")
+
         with self.assertRaises(Exception) as context:
             gw2api.encode_chat_link(0xff)
         self.assertEqual(str(context.exception), "Unknown link type 0xff")
@@ -174,6 +184,11 @@ class TestUtil(unittest.TestCase):
                          ("skin", {"id": 7}))
         self.assertEqual(gw2api.decode_chat_link("[&CwQAAAA=]"),
                          ("outfit", {"id": 4}))
+
+        self.assertEqual(gw2api.decode_chat_link("[&DGYAAABOBAAA]"),
+                         ("objective", {"objective_id": 102, "map_id": 1102}))
+        self.assertEqual(gw2api.decode_chat_link("[&DD4AAABgAAAA]"),
+                         ("objective", {"objective_id": 62, "map_id": 96}))
 
     def test_cache(self):
         class CacheMockSession(MockSession):
