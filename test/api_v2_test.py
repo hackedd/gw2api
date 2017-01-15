@@ -155,7 +155,7 @@ class TestApi2(unittest.TestCase):
         self.assertIn(coin, currencies)
         self.assertEqual("Coin", coin["name"])
 
-    def test_wvw(self):
+    def test_wvw_objective(self):
         objective_ids = gw2api.v2.wvw_objectives.get_ids()
         self.assertIsInstance(objective_ids, list)
 
@@ -164,18 +164,71 @@ class TestApi2(unittest.TestCase):
         self.assertIn("type", objective)
         # self.assertIn("coord", objective)
 
+    def test_wvw_matches(self):
         match_ids = gw2api.v2.wvw_matches.get_ids()
         self.assertIsInstance(match_ids, list)
 
         match = gw2api.v2.wvw_matches.get(match_ids[0])
         self.assertIn("id", match)
+        self.assertIn("worlds", match)
+        self.assertIn("all_worlds", match)
         self.assertIn("start_time", match)
         self.assertIn("end_time", match)
 
         match = gw2api.v2.wvw_matches.world(1007)
         self.assertIn("id", match)
+        self.assertIn("worlds", match)
+        self.assertIn("all_worlds", match)
         self.assertIn("start_time", match)
         self.assertIn("end_time", match)
+
+    def test_wvw_matches_overview(self):
+        match_ids = gw2api.v2.wvw_matches_overview.get_ids()
+        self.assertIsInstance(match_ids, list)
+
+        match = gw2api.v2.wvw_matches_overview.get(match_ids[0])
+        self.assertIn("id", match)
+        self.assertIn("worlds", match)
+        self.assertIn("all_worlds", match)
+        self.assertIn("start_time", match)
+        self.assertIn("end_time", match)
+
+        match = gw2api.v2.wvw_matches_overview.world(1007)
+        self.assertIn("id", match)
+        self.assertIn("worlds", match)
+        self.assertIn("all_worlds", match)
+        self.assertIn("start_time", match)
+        self.assertIn("end_time", match)
+
+    def test_wvw_matches_scores(self):
+        match_ids = gw2api.v2.wvw_matches_scores.get_ids()
+        self.assertIsInstance(match_ids, list)
+
+        match = gw2api.v2.wvw_matches_scores.get(match_ids[0])
+        self.assertIn("id", match)
+        self.assertIn("scores", match)
+        self.assertIn("maps", match)
+
+        match = gw2api.v2.wvw_matches_scores.world(1007)
+        self.assertIn("id", match)
+        self.assertIn("scores", match)
+        self.assertIn("maps", match)
+
+    def test_wvw_matches_stats(self):
+        match_ids = gw2api.v2.wvw_matches_stats.get_ids()
+        self.assertIsInstance(match_ids, list)
+
+        match = gw2api.v2.wvw_matches_stats.get(match_ids[0])
+        self.assertIn("id", match)
+        self.assertIn("deaths", match)
+        self.assertIn("kills", match)
+        self.assertIn("maps", match)
+
+        match = gw2api.v2.wvw_matches_stats.world(1007)
+        self.assertIn("id", match)
+        self.assertIn("deaths", match)
+        self.assertIn("kills", match)
+        self.assertIn("maps", match)
 
     def test_wvw_abilities(self):
         ids = gw2api.v2.wvw_abilities.get_ids()
