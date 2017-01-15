@@ -137,9 +137,10 @@ class GuildEndpoint(AuthenticatedEndpoint):
         name = "%s/%s/upgrades" % (self.name, id)
         return self.get_cached(name, None)
 
-    def get_log(self, id):
+    def get_log(self, id, since=None):
         name = "%s/%s/log" % (self.name, id)
-        return self.get_cached(name, None)
+        params = {"since": since} if since else {}
+        return self.get_cached(name, None, params=params)
 
     def get_teams(self, id):
         name = "%s/%s/teams" % (self.name, id)

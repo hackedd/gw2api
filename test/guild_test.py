@@ -74,6 +74,17 @@ class TestGuildAuthenticated(AuthenticatedTestBase):
             self.assertIn("id", entry)
             self.assertIn("type", entry)
 
+    def test_guild_log_since(self):
+        log = gw2api.v2.guild.get_log(self.guild_id)
+        self.assertIsInstance(log, list)
+
+        n = min(5, len(log) - 1)
+        since_entry = log[n]
+
+        log = gw2api.v2.guild.get_log(self.guild_id, since=since_entry["id"])
+        self.assertIsInstance(log, list)
+        self.assertEqual(len(log), n)
+
     def test_guild_teams(self):
         teams = gw2api.v2.guild.get_teams(self.guild_id)
         self.assertIsInstance(teams, list)
