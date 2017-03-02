@@ -246,6 +246,18 @@ class TestApi2(unittest.TestCase):
         self.assertIn("title", details)
         self.assertIn("min_rank", details)
 
+    def test_wvw_upgrades(self):
+        ids = gw2api.v2.wvw_upgrades.get_ids()
+        self.assertIsInstance(ids, list)
+
+        details = gw2api.v2.wvw_upgrades.get(ids[0])
+        self.assertIsInstance(details, dict)
+        self.assertIn("tiers", details)
+        self.assertIn("name", details["tiers"][0])
+        self.assertIn("upgrades", details["tiers"][0])
+        self.assertIn("name", details["tiers"][0]["upgrades"][0])
+        self.assertIn("icon", details["tiers"][0]["upgrades"][0])
+
     def test_achievements(self):
         achievement_ids = gw2api.v2.achievements.get_ids()
         self.assertIsInstance(achievement_ids, list)
