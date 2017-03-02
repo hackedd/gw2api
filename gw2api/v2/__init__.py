@@ -77,6 +77,7 @@ story_seasons = LocaleAwareEndpoint("stories/seasons")
 outfits = LocaleAwareEndpoint("outfits")
 dungeons = LocaleAwareEndpoint("dungeons")
 raids = LocaleAwareEndpoint("raids")
+races = LocaleAwareEndpoint("races")
 
 account = AccountEndpoint("account")
 token_info = TokenInfoEndpoint("tokeninfo")

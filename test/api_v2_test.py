@@ -515,3 +515,10 @@ class TestApi2(unittest.TestCase):
 
         details = gw2api.v2.raids.get(ids[0])
         self.assertIsInstance(details, dict)
+
+    def test_races(self):
+        ids = gw2api.v2.races.get_ids()
+        self.assertIsInstance(ids, list)
+
+        details = gw2api.v2.races.get(ids[0])
+        self.assertIsInstance(details, dict)
