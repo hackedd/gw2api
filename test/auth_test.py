@@ -82,6 +82,12 @@ class TestAuthenticated(AuthenticatedTestBase):
         raids = gw2api.v2.account.get_raids()
         self.assertIsInstance(raids, list)
 
+        home_nodes = gw2api.v2.account.get_home_nodes()
+        self.assertIsInstance(home_nodes, list)
+
+        home_cats = gw2api.v2.account.get_home_cats()
+        self.assertIsInstance(home_cats, list)
+
     def test_token_info(self):
         response = gw2api.v2.token_info.get(self.api_key)
         self.assertTrue(self.api_key.startswith(response["id"]))

@@ -69,6 +69,12 @@ class AccountEndpoint(AuthenticatedMixin, EndpointBase):
     def get_raids(self):
         return self.get_cached(self.name + "/raids", None)
 
+    def get_home_nodes(self):
+        return self.get_cached(self.name + "/home/nodes", None)
+
+    def get_home_cats(self):
+        return self.get_cached(self.name + "/home/cats", None)
+
 
 class TokenInfoEndpoint(AuthenticatedMixin, EndpointBase):
     def get(self, token=None):
