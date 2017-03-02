@@ -63,6 +63,12 @@ class AccountEndpoint(AuthenticatedMixin, EndpointBase):
     def get_recipes(self):
         return self.get_cached(self.name + "/recipes", None)
 
+    def get_dungeons(self):
+        return self.get_cached(self.name + "/dungeons", None)
+
+    def get_raids(self):
+        return self.get_cached(self.name + "/raids", None)
+
 
 class TokenInfoEndpoint(AuthenticatedMixin, EndpointBase):
     def get(self, token=None):

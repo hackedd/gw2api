@@ -501,3 +501,17 @@ class TestApi2(unittest.TestCase):
 
         details = gw2api.v2.outfits.get(ids[0])
         self.assertIsInstance(details, dict)
+
+    def test_dungeons(self):
+        ids = gw2api.v2.dungeons.get_ids()
+        self.assertIsInstance(ids, list)
+
+        details = gw2api.v2.dungeons.get(ids[0])
+        self.assertIsInstance(details, dict)
+
+    def test_raids(self):
+        ids = gw2api.v2.raids.get_ids()
+        self.assertIsInstance(ids, list)
+
+        details = gw2api.v2.raids.get(ids[0])
+        self.assertIsInstance(details, dict)
