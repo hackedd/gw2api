@@ -78,6 +78,7 @@ outfits = LocaleAwareEndpoint("outfits")
 dungeons = LocaleAwareEndpoint("dungeons")
 raids = LocaleAwareEndpoint("raids")
 races = LocaleAwareEndpoint("races")
+gliders = LocaleAwareEndpoint("gliders")
 
 account = AccountEndpoint("account")
 token_info = TokenInfoEndpoint("tokeninfo")

@@ -88,6 +88,9 @@ class TestAuthenticated(AuthenticatedTestBase):
         home_cats = gw2api.v2.account.get_home_cats()
         self.assertIsInstance(home_cats, list)
 
+        gliders = gw2api.v2.account.get_gliders()
+        self.assertIsInstance(gliders, list)
+
     def test_token_info(self):
         response = gw2api.v2.token_info.get(self.api_key)
         self.assertTrue(self.api_key.startswith(response["id"]))

@@ -75,6 +75,9 @@ class AccountEndpoint(AuthenticatedMixin, EndpointBase):
     def get_home_cats(self):
         return self.get_cached(self.name + "/home/cats", None)
 
+    def get_gliders(self):
+        return self.get_cached(self.name + "/gliders", None)
+
 
 class TokenInfoEndpoint(AuthenticatedMixin, EndpointBase):
     def get(self, token=None):

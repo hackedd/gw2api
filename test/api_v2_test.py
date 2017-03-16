@@ -41,6 +41,10 @@ class TestApi2(unittest.TestCase):
         page2 = gw2api.v2.quaggans.page(1, page_size=5)
         self.assertEqual([q["id"] for q in page2], ids[5:10])
 
+    def test_getting_paginated_colors(self):
+        page = gw2api.v2.colors.page()
+        self.assertEqual(len(page), gw2api.v2.colors.default_page_size)
+
     def test_getting_all_guaggans(self):
         ids = gw2api.v2.quaggans.get_ids()
         quaggans = gw2api.v2.quaggans.get_all()
@@ -521,4 +525,11 @@ class TestApi2(unittest.TestCase):
         self.assertIsInstance(ids, list)
 
         details = gw2api.v2.races.get(ids[0])
+        self.assertIsInstance(details, dict)
+
+    def test_gliders(self):
+        ids = gw2api.v2.gliders.get_ids()
+        self.assertIsInstance(ids, list)
+
+        details = gw2api.v2.gliders.get(ids[0])
         self.assertIsInstance(details, dict)
