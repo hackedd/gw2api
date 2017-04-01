@@ -4,9 +4,9 @@ from .endpoint import EndpointBase, Endpoint
 class AuthenticatedMixin(object):
     token = None
 
-    @classmethod
-    def set_token(cls, token):
-        cls.token = token
+    @staticmethod
+    def set_token(token):
+        AuthenticatedMixin.token = token
 
     def _get(self, path, **kwargs):
         token = kwargs.pop("token") if "token" in kwargs else self.token
@@ -20,7 +20,19 @@ class AuthenticatedEndpoint(AuthenticatedMixin, Endpoint):
     pass
 
 
+class AccountAchievementsEndpoint(AuthenticatedEndpoint):
+    def get_one(self, id):
+        # /v2/account/achievements does not support accessing by ID using the
+        # path (/v2/account/achievements/:id) but requires an id parameter.
+        cache_name = "%s.%s.json" % (self.name, id)
+        return self.get_cached(self.name, cache_name, params={"id": id})
+
+
 class AccountEndpoint(AuthenticatedMixin, EndpointBase):
+    def __init__(self, name):
+        super(AccountEndpoint, self).__init__(name)
+        self.achievements = AccountAchievementsEndpoint(name + "/achievements")
+
     def get(self):
         return self.get_cached(self.name, None)
 
@@ -43,7 +55,7 @@ class AccountEndpoint(AuthenticatedMixin, EndpointBase):
         return self.get_cached(self.name + "/minis", None)
 
     def get_achievements(self):
-        return self.get_cached(self.name + "/achievements", None)
+        return self.achievements.get_all()
 
     def get_inventory(self):
         return self.get_cached(self.name + "/inventory", None)

@@ -55,9 +55,6 @@ class TestAuthenticated(AuthenticatedTestBase):
         minis = gw2api.v2.account.get_minis()
         self.assertIsInstance(minis, list)
 
-        achievements = gw2api.v2.account.get_achievements()
-        self.assertIsInstance(achievements, list)
-
         inventory = gw2api.v2.account.get_inventory()
         self.assertIsInstance(inventory, list)
 
@@ -90,6 +87,26 @@ class TestAuthenticated(AuthenticatedTestBase):
 
         gliders = gw2api.v2.account.get_gliders()
         self.assertIsInstance(gliders, list)
+
+    def test_achievements(self):
+        gw2api.v2.account.set_token(self.api_key)
+        achievements = gw2api.v2.account.get_achievements()
+        self.assertIsInstance(achievements, list)
+
+        achievements = gw2api.v2.account.achievements.page(page_size=10)
+        self.assertIsInstance(achievements, list)
+        self.assertEqual(len(achievements), 10)
+
+        achievements = gw2api.v2.account.achievements.get(1, 2, 3)
+        self.assertIsInstance(achievements, list)
+        self.assertEqual(len(achievements), 3)
+
+        achievement = gw2api.v2.account.achievements.get(1)
+        self.assertIsInstance(achievement, dict)
+        self.assertIn("id", achievement)
+        self.assertIn("current", achievement)
+        self.assertIn("max", achievement)
+        self.assertIn("done", achievement)
 
     def test_token_info(self):
         response = gw2api.v2.token_info.get(self.api_key)
