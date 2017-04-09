@@ -168,6 +168,12 @@ class TestAuthenticated(AuthenticatedTestBase):
         self.assertIsInstance(skills, dict)
         self.assertEqual(sorted(skills.keys()), ["pve", "pvp", "wvw"])
 
+        sab = gw2api.v2.characters.get_sab(character_name)
+        self.assertIsInstance(sab, dict)
+        self.assertIn("zones", sab)
+        self.assertIn("unlocks", sab)
+        self.assertIn("songs", sab)
+
     def test_pvp_stats(self):
         gw2api.v2.pvp_stats.set_token(self.api_key)
 
