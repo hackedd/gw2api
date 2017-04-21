@@ -93,6 +93,9 @@ class AccountEndpoint(AuthenticatedMixin, EndpointBase):
     def get_mail_carriers(self):
         return self.get_cached(self.name + "/mailcarriers", None)
 
+    def get_pvp_heroes(self):
+        return self.get_cached(self.name + "/pvp/heroes", None)
+
 
 class TokenInfoEndpoint(AuthenticatedMixin, EndpointBase):
     def get(self, token=None):

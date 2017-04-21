@@ -91,6 +91,9 @@ class TestAuthenticated(AuthenticatedTestBase):
         mail_carriers = gw2api.v2.account.get_mail_carriers()
         self.assertIsInstance(mail_carriers, list)
 
+        pvp_heroes = gw2api.v2.account.get_pvp_heroes()
+        self.assertIsInstance(pvp_heroes, list)
+
     def test_achievements(self):
         gw2api.v2.account.set_token(self.api_key)
         achievements = gw2api.v2.account.get_achievements()

@@ -540,3 +540,10 @@ class TestApi2(unittest.TestCase):
 
         details = gw2api.v2.mail_carriers.get(ids[0])
         self.assertIsInstance(details, dict)
+
+    def test_pvp_heroes(self):
+        ids = gw2api.v2.pvp_heroes.get_ids()
+        self.assertIsInstance(ids, list)
+
+        details = gw2api.v2.pvp_heroes.get(ids[0])
+        self.assertIsInstance(details, dict)
