@@ -533,3 +533,10 @@ class TestApi2(unittest.TestCase):
 
         details = gw2api.v2.gliders.get(ids[0])
         self.assertIsInstance(details, dict)
+
+    def test_mail_carriers(self):
+        ids = gw2api.v2.mail_carriers.get_ids()
+        self.assertIsInstance(ids, list)
+
+        details = gw2api.v2.mail_carriers.get(ids[0])
+        self.assertIsInstance(details, dict)

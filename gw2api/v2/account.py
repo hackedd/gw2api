@@ -90,6 +90,9 @@ class AccountEndpoint(AuthenticatedMixin, EndpointBase):
     def get_gliders(self):
         return self.get_cached(self.name + "/gliders", None)
 
+    def get_mail_carriers(self):
+        return self.get_cached(self.name + "/mailcarriers", None)
+
 
 class TokenInfoEndpoint(AuthenticatedMixin, EndpointBase):
     def get(self, token=None):

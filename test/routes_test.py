@@ -12,6 +12,8 @@ def get_prefixed_endpoints(prefix, endpoint):
         if name.startswith("get_"):
             path = prefix + name[4:].replace("_", "/")
             endpoints[path] = getattr(endpoint, name)
+            path = prefix + name[4:].replace("_", "")
+            endpoints[path] = getattr(endpoint, name)
 
     return endpoints
 

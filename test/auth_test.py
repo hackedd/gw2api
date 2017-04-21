@@ -88,6 +88,9 @@ class TestAuthenticated(AuthenticatedTestBase):
         gliders = gw2api.v2.account.get_gliders()
         self.assertIsInstance(gliders, list)
 
+        mail_carriers = gw2api.v2.account.get_mail_carriers()
+        self.assertIsInstance(mail_carriers, list)
+
     def test_achievements(self):
         gw2api.v2.account.set_token(self.api_key)
         achievements = gw2api.v2.account.get_achievements()
