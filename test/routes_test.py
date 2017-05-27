@@ -68,6 +68,9 @@ def test_endpoints():
         "guild/search",
         "pvp/seasons/:id/leaderboards/:board",
         "pvp/seasons/:id/leaderboards/:board/:region",
+        "wvw/matches/stats/:id/guilds/:guild_id",
+        "wvw/matches/stats/:id/teams/:team/top/kdr",
+        "wvw/matches/stats/:id/teams/:team/top/kills",
     ]
     endpoints = get_endpoints()
 

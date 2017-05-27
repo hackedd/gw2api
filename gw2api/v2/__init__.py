@@ -17,7 +17,7 @@ from .account import (AuthenticatedEndpoint, AccountEndpoint,
                       PvpStatsEndpoint, GuildEndpoint)
 from .transactions import TransactionEndpoint
 from .achievements import AchievementEndpoint
-from .wvw import WvwMatchesEndpoint
+from .wvw import WvwMatchesEndpoint, WvwMatchStatsEndpoint
 from .pvp import PvpSeasonEndpoint
 
 
@@ -44,7 +44,7 @@ worlds = LocaleAwareEndpoint("worlds")
 wvw_matches = WvwMatchesEndpoint("wvw/matches")
 wvw_matches_overview = WvwMatchesEndpoint("wvw/matches/overview")
 wvw_matches_scores = WvwMatchesEndpoint("wvw/matches/scores")
-wvw_matches_stats = WvwMatchesEndpoint("wvw/matches/stats")
+wvw_matches_stats = WvwMatchStatsEndpoint("wvw/matches/stats")
 wvw_objectives = LocaleAwareEndpoint("wvw/objectives")
 wvw_abilities = LocaleAwareEndpoint("wvw/abilities")
 wvw_ranks = LocaleAwareEndpoint("wvw/ranks")

@@ -234,6 +234,32 @@ class TestApi2(unittest.TestCase):
         self.assertIn("kills", match)
         self.assertIn("maps", match)
 
+    def test_wvw_matches_guild_stats(self):
+        match_ids = gw2api.v2.wvw_matches_stats.get_ids()
+        self.assertIsInstance(match_ids, list)
+
+        # This is really hard to test without knowing which guilds are
+        # participating in which match. Theoretically that info should be
+        # available from the KDR and Kills endpoints, but those are not
+        # really working at the moment (2017-05)
+        with self.assertRaises(Exception) as context:
+            gw2api.v2.wvw_matches_stats.guild(match_ids[0], "invalid")
+        self.assertIn("no data for guild", str(context.exception))
+
+    def test_wvw_matches_guild_top_kdr(self):
+        match_ids = gw2api.v2.wvw_matches_stats.get_ids()
+        self.assertIsInstance(match_ids, list)
+
+        stats = gw2api.v2.wvw_matches_stats.team_top_kdr(match_ids[0], "red")
+        self.assertIsInstance(stats, list)
+
+    def test_wvw_matches_guild_top_kills(self):
+        match_ids = gw2api.v2.wvw_matches_stats.get_ids()
+        self.assertIsInstance(match_ids, list)
+
+        stats = gw2api.v2.wvw_matches_stats.team_top_kills(match_ids[0], "red")
+        self.assertIsInstance(stats, list)
+
     def test_wvw_abilities(self):
         ids = gw2api.v2.wvw_abilities.get_ids()
         self.assertIsInstance(ids, list)
