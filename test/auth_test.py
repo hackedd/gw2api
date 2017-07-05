@@ -94,6 +94,11 @@ class TestAuthenticated(AuthenticatedTestBase):
         pvp_heroes = gw2api.v2.account.get_pvp_heroes()
         self.assertIsInstance(pvp_heroes, list)
 
+        mastery_points = gw2api.v2.account.get_mastery_points()
+        self.assertIsInstance(mastery_points, dict)
+        self.assertIn("totals", mastery_points)
+        self.assertIn("unlocked", mastery_points)
+
     def test_achievements(self):
         gw2api.v2.account.set_token(self.api_key)
         achievements = gw2api.v2.account.get_achievements()

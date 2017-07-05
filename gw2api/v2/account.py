@@ -96,6 +96,9 @@ class AccountEndpoint(AuthenticatedMixin, EndpointBase):
     def get_pvp_heroes(self):
         return self.get_cached(self.name + "/pvp/heroes", None)
 
+    def get_mastery_points(self):
+        return self.get_cached(self.name + "/mastery/points", None)
+
 
 class TokenInfoEndpoint(AuthenticatedMixin, EndpointBase):
     def get(self, token=None):
