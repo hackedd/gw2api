@@ -49,6 +49,10 @@ class TestGuildAuthenticated(AuthenticatedTestBase):
         treasury = gw2api.v2.guild.get_treasury(self.guild_id)
         self.assertIsInstance(treasury, list)
 
+    def test_guild_storage(self):
+        storage = gw2api.v2.guild.get_storage(self.guild_id)
+        self.assertIsInstance(storage, list)
+
     def test_guild_upgrades(self):
         upgrades = gw2api.v2.guild.get_upgrades(self.guild_id)
         self.assertIsInstance(upgrades, list)

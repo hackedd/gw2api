@@ -173,6 +173,10 @@ class GuildEndpoint(AuthenticatedEndpoint):
         name = "%s/%s/treasury" % (self.name, id)
         return self.get_cached(name, None)
 
+    def get_storage(self, id):
+        name = "%s/%s/storage" % (self.name, id)
+        return self.get_cached(name, None)
+
     def get_upgrades(self, id):
         name = "%s/%s/upgrades" % (self.name, id)
         return self.get_cached(name, None)
