@@ -81,6 +81,8 @@ raids = LocaleAwareEndpoint("raids")
 races = LocaleAwareEndpoint("races")
 gliders = LocaleAwareEndpoint("gliders")
 mail_carriers = LocaleAwareEndpoint("mailcarriers")
+nodes = Endpoint("nodes")
+cats = Endpoint("cats")
 
 account = AccountEndpoint("account")
 token_info = TokenInfoEndpoint("tokeninfo")
