@@ -133,6 +133,14 @@ class TestAuthenticated(AuthenticatedTestBase):
         gw2api.v2.transactions.history_buys()
         gw2api.v2.transactions.history_sells()
 
+    def test_delivery(self):
+        gw2api.v2.delivery.set_token(self.api_key)
+
+        delivery = gw2api.v2.delivery.get()
+        self.assertIsInstance(delivery, dict)
+        self.assertIn("coins", delivery)
+        self.assertIn("items", delivery)
+
     def test_characters(self):
         gw2api.v2.characters.set_token(self.api_key)
 
